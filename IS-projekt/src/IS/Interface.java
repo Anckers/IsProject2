@@ -13,7 +13,7 @@ import java.awt.event.ActionEvent;
 public class Interface {
 
 	private JFrame frame;
-	private Controller controller = new Controller(); // controller connected to the interface//
+	private Controller controller = new Controller(); // controller connected to the interface
 	private JTextField textField_costumernumber;
 	private JTextField textField_name;
 	private JTextField textField_address;
@@ -59,18 +59,18 @@ public class Interface {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-		JLabel lblKundnummer = new JLabel(" Kundnummer:");
-		lblKundnummer.setBounds(3, 22, 139, 16);
-		frame.getContentPane().add(lblKundnummer);
+		JLabel lblCustomerNbr = new JLabel(" Kundnummer:");
+		lblCustomerNbr.setBounds(3, 22, 139, 16);
+		frame.getContentPane().add(lblCustomerNbr);
 
 		textField_costumernumber = new JTextField();
 		textField_costumernumber.setBounds(119, 17, 130, 26);
 		frame.getContentPane().add(textField_costumernumber);
 		textField_costumernumber.setColumns(10);
 
-		JLabel lblNamn = new JLabel(" Namn:");
-		lblNamn.setBounds(3, 50, 61, 16);
-		frame.getContentPane().add(lblNamn);
+		JLabel lblName = new JLabel(" Namn:");
+		lblName.setBounds(3, 50, 61, 16);
+		frame.getContentPane().add(lblName);
 
 		textField_name = new JTextField();
 		textField_name.setBounds(119, 45, 130, 26);
@@ -148,13 +148,13 @@ public class Interface {
 		btnChange.setBounds(132, 151, 117, 29);
 		frame.getContentPane().add(btnChange);
 
-		JLabel lblKund = new JLabel(" Kund");
-		lblKund.setBounds(3, 0, 61, 16);
-		frame.getContentPane().add(lblKund);
+		JLabel lblCustomer = new JLabel(" Kund");
+		lblCustomer.setBounds(3, 0, 61, 16);
+		frame.getContentPane().add(lblCustomer);
 		
 		
 
-		// The TextField, Button, Label and functions for the Customer is added to the interface//
+		// The TextField, Button, Label and functions for the Customer is added to the interface
 		
 		
 		
@@ -256,7 +256,7 @@ public class Interface {
 		
 		
 		
-		// The TextField, Button, Label and functions for the Product is added to the interface//
+		// The TextField, Button, Label and functions for the Product is added to the interface
 		
 		
 		
@@ -334,13 +334,13 @@ public class Interface {
 		frame.getContentPane().add(btnDelete_2);
 		
 		
-		// The TextField, Button, Label and functions for the Order is added to the interface//
+		// The TextField, Button, Label and functions for the Order is added to the interface
 		
 		
 
-		JLabel lblOrderrad = new JLabel(" Orderrad");
-		lblOrderrad.setBounds(3, 241, 61, 16);
-		frame.getContentPane().add(lblOrderrad);
+		JLabel lblOrderLine = new JLabel(" Orderrad");
+		lblOrderLine.setBounds(3, 241, 61, 16);
+		frame.getContentPane().add(lblOrderLine);
 
 		JLabel lblOrderline = new JLabel(" Orderradsnummer:");
 		lblOrderline.setBounds(3, 268, 148, 16);
@@ -396,7 +396,7 @@ public class Interface {
 		
 		
 		
-		// The TextField, Button, Label and functions for the Orderline is added to the interface//
+		// The TextField, Button, Label and functions for the Orderline is added to the interface
 		
 		
 
@@ -447,7 +447,7 @@ public class Interface {
 		
 		
 		
-		// The TextField, Button, Label and functions for the Item is added to the interface//
+		// The TextField, Button, Label and functions for the Item is added to the interface
 
 		
 		
@@ -457,5 +457,5 @@ public class Interface {
 		frame.getContentPane().add(textArea_1);
 	}
 	
-	// The textArea where the output comes out //
+	// The textArea where the output comes out 
 }
