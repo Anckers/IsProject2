@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
 
 public class Interface {
 
@@ -60,29 +61,29 @@ public class Interface {
 		frame.getContentPane().setLayout(null);
 
 		JLabel lblCustomerNbr = new JLabel(" Kundnummer:");
-		lblCustomerNbr.setBounds(3, 22, 139, 16);
+		lblCustomerNbr.setBounds(3, 37, 139, 16);
 		frame.getContentPane().add(lblCustomerNbr);
 
 		textField_costumernumber = new JTextField();
-		textField_costumernumber.setBounds(119, 17, 130, 26);
+		textField_costumernumber.setBounds(119, 32, 130, 26);
 		frame.getContentPane().add(textField_costumernumber);
 		textField_costumernumber.setColumns(10);
 
 		JLabel lblName = new JLabel(" Namn:");
-		lblName.setBounds(3, 50, 61, 16);
+		lblName.setBounds(3, 65, 61, 16);
 		frame.getContentPane().add(lblName);
 
 		textField_name = new JTextField();
-		textField_name.setBounds(119, 45, 130, 26);
+		textField_name.setBounds(119, 60, 130, 26);
 		frame.getContentPane().add(textField_name);
 		textField_name.setColumns(10);
 
 		JLabel lblAdress = new JLabel(" Adress:");
-		lblAdress.setBounds(3, 77, 61, 16);
+		lblAdress.setBounds(3, 92, 61, 16);
 		frame.getContentPane().add(lblAdress);
 
 		textField_address = new JTextField();
-		textField_address.setBounds(119, 72, 130, 26);
+		textField_address.setBounds(119, 87, 130, 26);
 		frame.getContentPane().add(textField_address);
 		textField_address.setColumns(10);
 
@@ -101,7 +102,7 @@ public class Interface {
 
 			}
 		});
-		btnCreate.setBounds(3, 111, 117, 29);
+		btnCreate.setBounds(3, 126, 117, 29);
 		frame.getContentPane().add(btnCreate);
 
 		JButton btnSearch = new JButton("S\u00F6k");
@@ -115,7 +116,7 @@ public class Interface {
 
 			}
 		});
-		btnSearch.setBounds(3, 151, 117, 29);
+		btnSearch.setBounds(3, 166, 117, 29);
 		frame.getContentPane().add(btnSearch);
 
 		JButton btnDelete = new JButton("Ta bort");
@@ -129,7 +130,7 @@ public class Interface {
 
 			}
 		});
-		btnDelete.setBounds(132, 111, 117, 29);
+		btnDelete.setBounds(132, 126, 117, 29);
 		frame.getContentPane().add(btnDelete);
 
 		JButton btnChange = new JButton("Ändra ");
@@ -145,11 +146,12 @@ public class Interface {
 
 			}
 		});
-		btnChange.setBounds(132, 151, 117, 29);
+		btnChange.setBounds(132, 166, 117, 29);
 		frame.getContentPane().add(btnChange);
 
 		JLabel lblCustomer = new JLabel(" Kund");
-		lblCustomer.setBounds(3, 0, 61, 16);
+		lblCustomer.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblCustomer.setBounds(3, 0, 148, 26);
 		frame.getContentPane().add(lblCustomer);
 		
 		
@@ -161,33 +163,34 @@ public class Interface {
 		
 
 		JLabel lblProduct = new JLabel("Produkt");
-		lblProduct.setBounds(317, 0, 61, 16);
+		lblProduct.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblProduct.setBounds(317, 0, 116, 23);
 		frame.getContentPane().add(lblProduct);
 
 		JLabel lblProductName = new JLabel("Produktnamn:");
-		lblProductName.setBounds(317, 22, 95, 16);
+		lblProductName.setBounds(317, 36, 95, 16);
 		frame.getContentPane().add(lblProductName);
 
 		textField_ProductName = new JTextField();
-		textField_ProductName.setBounds(427, 45, 130, 26);
+		textField_ProductName.setBounds(427, 59, 130, 26);
 		frame.getContentPane().add(textField_ProductName);
 		textField_ProductName.setColumns(10);
 
 		JLabel lblCategory = new JLabel("Kategori:");
-		lblCategory.setBounds(317, 50, 61, 16);
+		lblCategory.setBounds(317, 64, 61, 16);
 		frame.getContentPane().add(lblCategory);
 
 		textField_Category = new JTextField();
-		textField_Category.setBounds(427, 17, 130, 26);
+		textField_Category.setBounds(427, 31, 130, 26);
 		frame.getContentPane().add(textField_Category);
 		textField_Category.setColumns(10);
 
 		JLabel lblPrice = new JLabel("Pris:");
-		lblPrice.setBounds(317, 78, 61, 16);
+		lblPrice.setBounds(317, 92, 61, 16);
 		frame.getContentPane().add(lblPrice);
 
 		textField_Price = new JTextField();
-		textField_Price.setBounds(427, 72, 130, 26);
+		textField_Price.setBounds(427, 86, 130, 26);
 		frame.getContentPane().add(textField_Price);
 		textField_Price.setColumns(10);
 
@@ -207,7 +210,7 @@ public class Interface {
 
 			}
 		});
-		btnCreate_1.setBounds(316, 111, 117, 29);
+		btnCreate_1.setBounds(316, 125, 117, 29);
 		frame.getContentPane().add(btnCreate_1);
 
 		JButton btnSearch_1 = new JButton("S\u00F6k");
@@ -221,7 +224,7 @@ public class Interface {
 
 			}
 		});
-		btnSearch_1.setBounds(316, 152, 117, 29);
+		btnSearch_1.setBounds(316, 166, 117, 29);
 		frame.getContentPane().add(btnSearch_1);
 
 		JButton btnDelete_1 = new JButton("Ta bort");
@@ -235,7 +238,7 @@ public class Interface {
 
 			}
 		});
-		btnDelete_1.setBounds(440, 111, 117, 29);
+		btnDelete_1.setBounds(440, 125, 117, 29);
 		frame.getContentPane().add(btnDelete_1);
 
 		JButton btnChange_1 = new JButton("Ändra ");
@@ -250,7 +253,7 @@ public class Interface {
 				textArea_1.setText("Produkten är ändrad");
 			}
 		});
-		btnChange_1.setBounds(440, 151, 117, 29);
+		btnChange_1.setBounds(440, 165, 117, 29);
 		frame.getContentPane().add(btnChange_1);
 		
 		
@@ -262,24 +265,25 @@ public class Interface {
 		
 
 		JLabel lblOrder = new JLabel("Order");
-		lblOrder.setBounds(635, 0, 61, 16);
+		lblOrder.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblOrder.setBounds(633, 0, 89, 26);
 		frame.getContentPane().add(lblOrder);
 
 		JLabel lblOrdernumber = new JLabel("Ordernummer:");
-		lblOrdernumber.setBounds(635, 22, 95, 16);
+		lblOrdernumber.setBounds(633, 37, 95, 16);
 		frame.getContentPane().add(lblOrdernumber);
 
 		textField_Ordernumber = new JTextField();
-		textField_Ordernumber.setBounds(745, 17, 130, 26);
+		textField_Ordernumber.setBounds(743, 32, 130, 26);
 		frame.getContentPane().add(textField_Ordernumber);
 		textField_Ordernumber.setColumns(10);
 
 		JLabel lblDate = new JLabel("Datum:");
-		lblDate.setBounds(635, 50, 61, 16);
+		lblDate.setBounds(633, 65, 61, 16);
 		frame.getContentPane().add(lblDate);
 
 		textField_date = new JTextField();
-		textField_date.setBounds(745, 45, 130, 26);
+		textField_date.setBounds(743, 60, 130, 26);
 		frame.getContentPane().add(textField_date);
 		textField_date.setColumns(10);
 
@@ -302,7 +306,7 @@ public class Interface {
 			}
 
 		});
-		btnCreate_2.setBounds(635, 111, 117, 29);
+		btnCreate_2.setBounds(633, 126, 117, 29);
 		frame.getContentPane().add(btnCreate_2);
 
 		JButton btnSearch_2 = new JButton("S\u00F6k");
@@ -316,7 +320,7 @@ public class Interface {
 
 			}
 		});
-		btnSearch_2.setBounds(635, 151, 117, 29);
+		btnSearch_2.setBounds(633, 166, 117, 29);
 		frame.getContentPane().add(btnSearch_2);
 
 		JButton btnDelete_2 = new JButton("Ta bort");
@@ -330,7 +334,7 @@ public class Interface {
 
 			}
 		});
-		btnDelete_2.setBounds(758, 111, 117, 29);
+		btnDelete_2.setBounds(756, 126, 117, 29);
 		frame.getContentPane().add(btnDelete_2);
 		
 		
@@ -339,7 +343,8 @@ public class Interface {
 		
 
 		JLabel lblOrderLine = new JLabel(" Orderrad");
-		lblOrderLine.setBounds(3, 241, 61, 16);
+		lblOrderLine.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblOrderLine.setBounds(3, 231, 139, 26);
 		frame.getContentPane().add(lblOrderLine);
 
 		JLabel lblOrderline = new JLabel(" Orderradsnummer:");
@@ -347,7 +352,7 @@ public class Interface {
 		frame.getContentPane().add(lblOrderline);
 
 		textField_Orderline = new JTextField();
-		textField_Orderline.setBounds(119, 263, 130, 26);
+		textField_Orderline.setBounds(153, 263, 130, 26);
 		frame.getContentPane().add(textField_Orderline);
 		textField_Orderline.setColumns(10);
 
@@ -356,7 +361,7 @@ public class Interface {
 		frame.getContentPane().add(lblAmount);
 
 		textField_Amount = new JTextField();
-		textField_Amount.setBounds(119, 290, 130, 26);
+		textField_Amount.setBounds(153, 290, 130, 26);
 		frame.getContentPane().add(textField_Amount);
 		textField_Amount.setColumns(10);
 
@@ -379,7 +384,7 @@ public class Interface {
 
 			}
 		});
-		btnCreate_3.setBounds(3, 332, 117, 29);
+		btnCreate_3.setBounds(3, 332, 130, 29);
 		frame.getContentPane().add(btnCreate_3);
 
 		JButton btnDelete_3 = new JButton("Ta bort");
@@ -391,7 +396,7 @@ public class Interface {
 				textArea_1.setText("Orderraden är borttagen");
 			}
 		});
-		btnDelete_3.setBounds(132, 332, 117, 29);
+		btnDelete_3.setBounds(153, 332, 130, 29);
 		frame.getContentPane().add(btnDelete_3);
 		
 		
@@ -401,6 +406,7 @@ public class Interface {
 		
 
 		JLabel lblItem = new JLabel("Exemplar ");
+		lblItem.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblItem.setBounds(317, 241, 116, 16);
 		frame.getContentPane().add(lblItem);
 
