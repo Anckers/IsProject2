@@ -4,6 +4,9 @@ public class Customer {
 	private String customerId;
 	private String name;
 	private String address;
+	private Order order;
+
+
 
 	public Customer(String customerId, String name, String address) {
 		this.customerId = customerId;
@@ -38,4 +41,11 @@ public class Customer {
 		address = Address;
 	}
 	
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
+	}
 }

@@ -10,27 +10,33 @@ import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import java.awt.Color;
 
 public class Interface {
 
 	private JFrame frame;
-	private Controller controller = new Controller(); // controller connected to the interface
-	private JTextField textField_costumernumber;
-	private JTextField textField_name;
-	private JTextField textField_address;
+	private Controller controller; 
+	private ProductRegister productRegister;
+	private CustomerRegister customerRegister;
+	private JTextField txtField_CustomerNumber;
+	private JTextField txtFeild_Name;
+	private JTextField txtField_Address;
 	private JTextField textField_ProductName;
-	private JTextField textField_Category;
-	private JTextField textField_Price;
-	private JTextField textField_Ordernumber;
-	private JTextField textField_date;
+	private JTextField textField_ProductCategory;
+	private JTextField txtField_ProductPrice;
+	private JTextField textField_OrderNumber;
+	private JTextField textField_OrderDate;
 	private JTextField textField_Orderline;
-	private JTextField textField_Amount;
-	private JTextField textField_SerialNumber;
+	private JTextField textField_OrderLineAmount;
+	private JTextField textField_ItemSerialNumber;
 	private JTextArea textArea_1;
+	private JTextField txtField_OrderCustomerId;
 
+	
 	/**
 	 * Launch the application.
 	 */
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -44,6 +50,7 @@ public class Interface {
 		});
 	}
 
+	
 	/**
 	 * Create the application.
 	 */
@@ -55,6 +62,11 @@ public class Interface {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
+		customerRegister = new CustomerRegister();
+		productRegister = new ProductRegister();
+		controller = new Controller (customerRegister, productRegister);
+		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 929, 640);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -64,90 +76,147 @@ public class Interface {
 		lblCustomerNbr.setBounds(3, 37, 139, 16);
 		frame.getContentPane().add(lblCustomerNbr);
 
-		textField_costumernumber = new JTextField();
-		textField_costumernumber.setBounds(119, 32, 130, 26);
-		frame.getContentPane().add(textField_costumernumber);
-		textField_costumernumber.setColumns(10);
+		txtField_CustomerNumber = new JTextField();
+		txtField_CustomerNumber.setBounds(119, 32, 130, 26);
+		frame.getContentPane().add(txtField_CustomerNumber);
+		txtField_CustomerNumber.setColumns(10);
 
 		JLabel lblName = new JLabel(" Namn:");
 		lblName.setBounds(3, 65, 61, 16);
 		frame.getContentPane().add(lblName);
 
-		textField_name = new JTextField();
-		textField_name.setBounds(119, 60, 130, 26);
-		frame.getContentPane().add(textField_name);
-		textField_name.setColumns(10);
+		txtFeild_Name = new JTextField();
+		txtFeild_Name.setBounds(119, 60, 130, 26);
+		frame.getContentPane().add(txtFeild_Name);
+		txtFeild_Name.setColumns(10);
 
 		JLabel lblAdress = new JLabel(" Adress:");
 		lblAdress.setBounds(3, 92, 61, 16);
 		frame.getContentPane().add(lblAdress);
 
-		textField_address = new JTextField();
-		textField_address.setBounds(119, 87, 130, 26);
-		frame.getContentPane().add(textField_address);
-		textField_address.setColumns(10);
+		txtField_Address = new JTextField();
+		txtField_Address.setBounds(119, 87, 130, 26);
+		frame.getContentPane().add(txtField_Address);
+		txtField_Address.setColumns(10);
 
-		JButton btnCreate = new JButton("Skapa");
-		btnCreate.addActionListener(new ActionListener() {
+		JButton btnCreateCustomer = new JButton("Skapa");
+		btnCreateCustomer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String customerId = textField_costumernumber.getText();
-				String name = textField_name.getText();
-				String address = textField_address.getText();
-
+				String customerId = txtField_CustomerNumber.getText();
+				String name = txtFeild_Name.getText();
+				String address = txtField_Address.getText();
 				Customer A = new Customer(customerId, name, address);
-
-				controller.addCustomer(A);
-
-				textArea_1.setText("Kunden är tillagd i systemet");
-
+				//adds Customer creates a argument that allow for actions to be performed if successful
+				Boolean success = controller.addCustomer(A);
+				//Controls that required fields are not empty
+				if(!txtField_CustomerNumber.getText().isEmpty() && !txtFeild_Name.getText().isEmpty() && !txtField_Address.getText().isEmpty()) {
+					//performs action when button is successful
+					if (success) {
+						//changes color of the txtArea
+						textArea_1.setForeground(new Color(0, 128, 0));
+						//success message in txtArea
+						textArea_1.setText(name + " är tillagd i systemet");
+						//empties txtFeild's
+						txtField_CustomerNumber.setText("");
+						txtFeild_Name.setText("");
+						txtField_Address.setText("");
+					}
+					//if action is not successful this message will be shown
+					else {
+						textArea_1.setForeground(new Color(255, 0, 0));
+						textArea_1.setText("Kundnummer " + customerId + " finns redan i systemet");
+					}
+				}
+				//if any field is empty this message will be shown
+				else {
+					textArea_1.setForeground(new Color(255, 0, 0));
+					textArea_1.setText("inga fält under Kund får vara tom");
+				}
 			}
 		});
-		btnCreate.setBounds(3, 126, 117, 29);
-		frame.getContentPane().add(btnCreate);
+		btnCreateCustomer.setBounds(3, 126, 117, 29);
+		frame.getContentPane().add(btnCreateCustomer);
 
-		JButton btnSearch = new JButton("S\u00F6k");
-		btnSearch.addActionListener(new ActionListener() {
+		JButton btnSearchCustomer = new JButton("S\u00F6k");
+		btnSearchCustomer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String customId = textField_costumernumber.getText();
-
+				String customId = txtField_CustomerNumber.getText();
 				Customer temp = controller.findCustomer(customId);
-
-				textArea_1.setText("Personens info: " + temp.getAddress() + " " + temp.getName());
-
+				if(!txtField_CustomerNumber.getText().isEmpty()) {
+					if(temp != null) {
+						txtField_CustomerNumber.setText("");
+						textArea_1.setForeground(new Color(0, 0, 0));
+						textArea_1.setText("Personens info: " + temp.getAddress() + " " + temp.getName());
+					}
+					else {
+						textArea_1.setForeground(new Color(255, 0, 0));
+						textArea_1.setText("Finns ingen kund med kundnummer: " + customId);
+					}
+				}
+				else {
+					textArea_1.setForeground(new Color(255, 0, 0));
+					textArea_1.setText("Kundnummer krävs");
+				}
 			}
 		});
-		btnSearch.setBounds(3, 166, 117, 29);
-		frame.getContentPane().add(btnSearch);
+		btnSearchCustomer.setBounds(3, 166, 117, 29);
+		frame.getContentPane().add(btnSearchCustomer);
 
-		JButton btnDelete = new JButton("Ta bort");
-		btnDelete.addActionListener(new ActionListener() {
+		JButton btnDeleteCustomer = new JButton("Ta bort");
+		btnDeleteCustomer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String customId = textField_costumernumber.getText();
-
-				controller.removeCustomer(customId);
-
-				textArea_1.setText("Kunden är borttagen");
-
+				String customId = txtField_CustomerNumber.getText();
+				Customer temp = controller.findCustomer(customId);
+				controller.removeCustomer(customId);				
+				if(!txtField_CustomerNumber.getText().isEmpty()) {
+					if(temp != null) {
+						txtField_CustomerNumber.setText("");
+						textArea_1.setForeground(new Color(0, 128, 0));
+						textArea_1.setText(temp.getName() + " har blivit borttagen");
+					}
+					else {
+						textArea_1.setForeground(new Color(255, 0, 0));
+						textArea_1.setText("Finns ingen kund med kundnummer: " + customId);
+					}
+				}
+				else {
+					textArea_1.setForeground(new Color(255, 0, 0));
+					textArea_1.setText("Kundnummer krävs");
+				}
 			}
 		});
-		btnDelete.setBounds(132, 126, 117, 29);
-		frame.getContentPane().add(btnDelete);
+		btnDeleteCustomer.setBounds(132, 126, 117, 29);
+		frame.getContentPane().add(btnDeleteCustomer);
 
-		JButton btnChange = new JButton("Ändra ");
-		btnChange.addActionListener(new ActionListener() {
+		JButton btnChangeCustomer = new JButton("Ändra ");
+		btnChangeCustomer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String customId = textField_costumernumber.getText();
-				String name = textField_name.getText();
-				String address = textField_address.getText();
-
-				controller.editCutomer(customId, name, address);
-
-				textArea_1.setText("Uppgifter om kunden är ändrad");
-
+				String customId = txtField_CustomerNumber.getText();
+				String name = txtFeild_Name.getText();
+				String address = txtField_Address.getText();
+				Customer temp = controller.findCustomer(customId);
+				if(!txtField_CustomerNumber.getText().isEmpty() && !txtFeild_Name.getText().isEmpty() && !txtField_Address.getText().isEmpty()) {
+					if(temp != null) {
+						controller.editCustomer(customId, name, address);
+						textArea_1.setForeground(new Color(0, 128, 0));
+						textArea_1.setText("Kundnummer: " + customId + " Har blivit ändrad");
+						txtField_CustomerNumber.setText("");
+						txtFeild_Name.setText("");
+						txtField_Address.setText("");
+					}
+					else {
+						textArea_1.setForeground(new Color(255, 0, 0));
+						textArea_1.setText("Finns ingen kund med kundnummer: " + customId);
+					}
+				}
+				else {
+					textArea_1.setForeground(new Color(255, 0, 0));
+					textArea_1.setText("inga fält under Kund får vara tom");
+				}
 			}
 		});
-		btnChange.setBounds(132, 166, 117, 29);
-		frame.getContentPane().add(btnChange);
+		btnChangeCustomer.setBounds(132, 166, 117, 29);
+		frame.getContentPane().add(btnChangeCustomer);
 
 		JLabel lblCustomer = new JLabel(" Kund");
 		lblCustomer.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -176,32 +245,32 @@ public class Interface {
 		frame.getContentPane().add(textField_ProductName);
 		textField_ProductName.setColumns(10);
 
-		JLabel lblCategory = new JLabel("Kategori:");
-		lblCategory.setBounds(317, 64, 61, 16);
-		frame.getContentPane().add(lblCategory);
+		JLabel lblProductCategory = new JLabel("Kategori:");
+		lblProductCategory.setBounds(317, 64, 61, 16);
+		frame.getContentPane().add(lblProductCategory);
 
-		textField_Category = new JTextField();
-		textField_Category.setBounds(427, 31, 130, 26);
-		frame.getContentPane().add(textField_Category);
-		textField_Category.setColumns(10);
+		textField_ProductCategory = new JTextField();
+		textField_ProductCategory.setBounds(427, 31, 130, 26);
+		frame.getContentPane().add(textField_ProductCategory);
+		textField_ProductCategory.setColumns(10);
 
-		JLabel lblPrice = new JLabel("Pris:");
-		lblPrice.setBounds(317, 92, 61, 16);
-		frame.getContentPane().add(lblPrice);
+		JLabel lblProductPrice = new JLabel("Pris:");
+		lblProductPrice.setBounds(317, 92, 61, 16);
+		frame.getContentPane().add(lblProductPrice);
 
-		textField_Price = new JTextField();
-		textField_Price.setBounds(427, 86, 130, 26);
-		frame.getContentPane().add(textField_Price);
-		textField_Price.setColumns(10);
+		txtField_ProductPrice = new JTextField();
+		txtField_ProductPrice.setBounds(427, 86, 130, 26);
+		frame.getContentPane().add(txtField_ProductPrice);
+		txtField_ProductPrice.setColumns(10);
 
-		JButton btnCreate_1 = new JButton("Skapa");
-		btnCreate_1.addActionListener(new ActionListener() {
+		JButton btnCreateProduct = new JButton("Skapa");
+		btnCreateProduct.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				String Namn = textField_ProductName.getText();
-				String Kategori = textField_Category.getText();
-				Integer pris = new Integer(textField_Price.getText());
-
+				String Kategori = textField_ProductCategory.getText();
+				Integer pris = new Integer(txtField_ProductPrice.getText());
+				//fix!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 				Product B = new Product(Namn, Kategori, pris);
 
 				controller.addProduct(B);
@@ -210,51 +279,51 @@ public class Interface {
 
 			}
 		});
-		btnCreate_1.setBounds(316, 125, 117, 29);
-		frame.getContentPane().add(btnCreate_1);
+		btnCreateProduct.setBounds(316, 125, 117, 29);
+		frame.getContentPane().add(btnCreateProduct);
 
-		JButton btnSearch_1 = new JButton("S\u00F6k");
-		btnSearch_1.addActionListener(new ActionListener() {
+		JButton btnSearchProduct = new JButton("S\u00F6k");
+		btnSearchProduct.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String productNamn = textField_ProductName.getText();
-
+				//fix!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 				Product temp = controller.findProduct(productNamn);
 
 				textArea_1.setText("Produktens info: " + temp.getCategory() + " " + temp.getPrice());
 
 			}
 		});
-		btnSearch_1.setBounds(316, 166, 117, 29);
-		frame.getContentPane().add(btnSearch_1);
+		btnSearchProduct.setBounds(316, 166, 117, 29);
+		frame.getContentPane().add(btnSearchProduct);
 
-		JButton btnDelete_1 = new JButton("Ta bort");
-		btnDelete_1.addActionListener(new ActionListener() {
+		JButton btnDeleteProduct = new JButton("Ta bort");
+		btnDeleteProduct.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String productNamn = textField_ProductName.getText();
-
+				//fix!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 				controller.removeProduct(productNamn);
 
 				textArea_1.setText("Produkten är borttagen");
 
 			}
 		});
-		btnDelete_1.setBounds(440, 125, 117, 29);
-		frame.getContentPane().add(btnDelete_1);
+		btnDeleteProduct.setBounds(440, 125, 117, 29);
+		frame.getContentPane().add(btnDeleteProduct);
 
-		JButton btnChange_1 = new JButton("Ändra ");
-		btnChange_1.addActionListener(new ActionListener() {
+		JButton btnChangeProduct = new JButton("Ändra ");
+		btnChangeProduct.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String Namn = textField_ProductName.getText();
-				String Kategori = textField_Category.getText();
-				Integer pris = new Integer(textField_Price.getText());
+				String Kategori = textField_ProductCategory.getText();
+				Integer pris = new Integer(txtField_ProductPrice.getText());
 
 				controller.editProduct(Namn, Kategori, pris);
-
+				//fix!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 				textArea_1.setText("Produkten är ändrad");
 			}
 		});
-		btnChange_1.setBounds(440, 165, 117, 29);
-		frame.getContentPane().add(btnChange_1);
+		btnChangeProduct.setBounds(440, 165, 117, 29);
+		frame.getContentPane().add(btnChangeProduct);
 		
 		
 		
@@ -269,50 +338,43 @@ public class Interface {
 		lblOrder.setBounds(633, 0, 89, 26);
 		frame.getContentPane().add(lblOrder);
 
-		JLabel lblOrdernumber = new JLabel("Ordernummer:");
-		lblOrdernumber.setBounds(633, 37, 95, 16);
-		frame.getContentPane().add(lblOrdernumber);
+		JLabel lblOrderNumber = new JLabel("Ordernummer:");
+		lblOrderNumber.setBounds(633, 64, 95, 16);
+		frame.getContentPane().add(lblOrderNumber);
 
-		textField_Ordernumber = new JTextField();
-		textField_Ordernumber.setBounds(743, 32, 130, 26);
-		frame.getContentPane().add(textField_Ordernumber);
-		textField_Ordernumber.setColumns(10);
+		textField_OrderNumber = new JTextField();
+		textField_OrderNumber.setBounds(743, 59, 130, 26);
+		frame.getContentPane().add(textField_OrderNumber);
+		textField_OrderNumber.setColumns(10);
 
-		JLabel lblDate = new JLabel("Datum:");
-		lblDate.setBounds(633, 65, 61, 16);
-		frame.getContentPane().add(lblDate);
+		JLabel lblOrderDate = new JLabel("Datum:");
+		lblOrderDate.setBounds(633, 92, 61, 16);
+		frame.getContentPane().add(lblOrderDate);
 
-		textField_date = new JTextField();
-		textField_date.setBounds(743, 60, 130, 26);
-		frame.getContentPane().add(textField_date);
-		textField_date.setColumns(10);
+		textField_OrderDate = new JTextField();
+		textField_OrderDate.setBounds(743, 87, 130, 26);
+		frame.getContentPane().add(textField_OrderDate);
+		textField_OrderDate.setColumns(10);
 
-		JButton btnCreate_2 = new JButton("Skapa");
-		btnCreate_2.addActionListener(new ActionListener() {
+		JButton btnCreate_Order = new JButton("Skapa");
+		btnCreate_Order.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				String orderId = textField_Ordernumber.getText();
-				String orderDate = textField_date.getText();
-				String customerId = textField_costumernumber.getText();
-
-				Customer temp = controller.findCustomer(customerId);
-
-				Order C = new Order(orderId, orderDate, temp);
-
-				controller.addOrder(C);
-
+				String orderId = textField_OrderNumber.getText();
+				String orderDate = textField_OrderDate.getText();
+				String customerId = txtField_CustomerNumber.getText();
+				controller.addOrder(orderId, orderDate, customerId);
 				textArea_1.setText("Ordern är tillagd");
-
 			}
 
 		});
-		btnCreate_2.setBounds(633, 126, 117, 29);
-		frame.getContentPane().add(btnCreate_2);
+		btnCreate_Order.setBounds(633, 126, 117, 29);
+		frame.getContentPane().add(btnCreate_Order);
 
-		JButton btnSearch_2 = new JButton("S\u00F6k");
-		btnSearch_2.addActionListener(new ActionListener() {
+		JButton btnSearch_Order = new JButton("S\u00F6k");
+		btnSearch_Order.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String orderId = textField_Ordernumber.getText();
+				String orderId = textField_OrderNumber.getText();
 
 				Order temp = controller.findOrder(orderId);
 
@@ -320,13 +382,13 @@ public class Interface {
 
 			}
 		});
-		btnSearch_2.setBounds(633, 166, 117, 29);
-		frame.getContentPane().add(btnSearch_2);
+		btnSearch_Order.setBounds(633, 166, 117, 29);
+		frame.getContentPane().add(btnSearch_Order);
 
-		JButton btnDelete_2 = new JButton("Ta bort");
-		btnDelete_2.addActionListener(new ActionListener() {
+		JButton btnDelete_Order = new JButton("Ta bort");
+		btnDelete_Order.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String orderId = textField_Ordernumber.getText();
+				String orderId = textField_OrderNumber.getText();
 
 				controller.removeOrder(orderId);
 
@@ -334,8 +396,8 @@ public class Interface {
 
 			}
 		});
-		btnDelete_2.setBounds(756, 126, 117, 29);
-		frame.getContentPane().add(btnDelete_2);
+		btnDelete_Order.setBounds(756, 126, 117, 29);
+		frame.getContentPane().add(btnDelete_Order);
 		
 		
 		// The TextField, Button, Label and functions for the Order is added to the interface
@@ -356,21 +418,21 @@ public class Interface {
 		frame.getContentPane().add(textField_Orderline);
 		textField_Orderline.setColumns(10);
 
-		JLabel lblAmount = new JLabel(" Antal:");
-		lblAmount.setBounds(3, 295, 61, 16);
-		frame.getContentPane().add(lblAmount);
+		JLabel lblOrderLineAmount = new JLabel(" Antal:");
+		lblOrderLineAmount.setBounds(3, 295, 61, 16);
+		frame.getContentPane().add(lblOrderLineAmount);
 
-		textField_Amount = new JTextField();
-		textField_Amount.setBounds(153, 290, 130, 26);
-		frame.getContentPane().add(textField_Amount);
-		textField_Amount.setColumns(10);
+		textField_OrderLineAmount = new JTextField();
+		textField_OrderLineAmount.setBounds(153, 290, 130, 26);
+		frame.getContentPane().add(textField_OrderLineAmount);
+		textField_OrderLineAmount.setColumns(10);
 
-		JButton btnCreate_3 = new JButton("Skapa");
-		btnCreate_3.addActionListener(new ActionListener() {
+		JButton btnCreate_OrderLine = new JButton("Skapa");
+		btnCreate_OrderLine.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String idNummer = textField_Orderline.getText();
-				Integer antal = new Integer(textField_Amount.getText());
-				String orderId = textField_Ordernumber.getText();
+				Integer antal = new Integer(textField_OrderLineAmount.getText());
+				String orderId = textField_OrderNumber.getText();
 				String productName = textField_ProductName.getText();
 
 				Order temp1 = controller.findOrder(orderId);
@@ -384,11 +446,11 @@ public class Interface {
 
 			}
 		});
-		btnCreate_3.setBounds(3, 332, 130, 29);
-		frame.getContentPane().add(btnCreate_3);
+		btnCreate_OrderLine.setBounds(3, 332, 130, 29);
+		frame.getContentPane().add(btnCreate_OrderLine);
 
-		JButton btnDelete_3 = new JButton("Ta bort");
-		btnDelete_3.addActionListener(new ActionListener() {
+		JButton btnDelete_OrderLine = new JButton("Ta bort");
+		btnDelete_OrderLine.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String idNummer = textField_Orderline.getText();
 				controller.removeOrderLine(idNummer);
@@ -396,8 +458,8 @@ public class Interface {
 				textArea_1.setText("Orderraden är borttagen");
 			}
 		});
-		btnDelete_3.setBounds(153, 332, 130, 29);
-		frame.getContentPane().add(btnDelete_3);
+		btnDelete_OrderLine.setBounds(153, 332, 130, 29);
+		frame.getContentPane().add(btnDelete_OrderLine);
 		
 		
 		
@@ -405,24 +467,24 @@ public class Interface {
 		
 		
 
-		JLabel lblItem = new JLabel("Exemplar ");
-		lblItem.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblItem.setBounds(317, 241, 116, 16);
-		frame.getContentPane().add(lblItem);
+		JLabel lbl_Item = new JLabel("Exemplar ");
+		lbl_Item.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lbl_Item.setBounds(317, 231, 116, 26);
+		frame.getContentPane().add(lbl_Item);
 
-		JLabel lblSerialNumber = new JLabel("Serienummer:");
-		lblSerialNumber.setBounds(317, 268, 108, 16);
-		frame.getContentPane().add(lblSerialNumber);
+		JLabel lbl_ItemSerialNumber = new JLabel("Serienummer:");
+		lbl_ItemSerialNumber.setBounds(317, 268, 108, 16);
+		frame.getContentPane().add(lbl_ItemSerialNumber);
 
-		textField_SerialNumber = new JTextField();
-		textField_SerialNumber.setBounds(422, 263, 130, 26);
-		frame.getContentPane().add(textField_SerialNumber);
-		textField_SerialNumber.setColumns(10);
+		textField_ItemSerialNumber = new JTextField();
+		textField_ItemSerialNumber.setBounds(422, 263, 130, 26);
+		frame.getContentPane().add(textField_ItemSerialNumber);
+		textField_ItemSerialNumber.setColumns(10);
 
-		JButton btnCreate_4 = new JButton("Skapa");
-		btnCreate_4.addActionListener(new ActionListener() {
+		JButton btnCreate_Item = new JButton("Skapa");
+		btnCreate_Item.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String serialNumber = textField_SerialNumber.getText();
+				String serialNumber = textField_ItemSerialNumber.getText();
 				String productId = textField_ProductName.getText();
 
 				Product temp3 = controller.findProduct(productId);
@@ -435,21 +497,21 @@ public class Interface {
 
 			}
 		});
-		btnCreate_4.setBounds(316, 335, 117, 29);
-		frame.getContentPane().add(btnCreate_4);
+		btnCreate_Item.setBounds(316, 335, 117, 29);
+		frame.getContentPane().add(btnCreate_Item);
 
-		JButton btnDelete_4 = new JButton("Ta bort");
-		btnDelete_4.addActionListener(new ActionListener() {
+		JButton btnDelete_Item = new JButton("Ta bort");
+		btnDelete_Item.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String serialNumber = textField_SerialNumber.getText();
+				String serialNumber = textField_ItemSerialNumber.getText();
 
 				controller.removeItem(serialNumber);
 
 				textArea_1.setText("Exemplet är borttaget");
 			}
 		});
-		btnDelete_4.setBounds(435, 335, 117, 29);
-		frame.getContentPane().add(btnDelete_4);
+		btnDelete_Item.setBounds(435, 335, 117, 29);
+		frame.getContentPane().add(btnDelete_Item);
 		
 		
 		
@@ -461,7 +523,14 @@ public class Interface {
 		textArea_1.setLineWrap(true);
 		textArea_1.setBounds(199, 399, 499, 162);
 		frame.getContentPane().add(textArea_1);
+		
+		txtField_OrderCustomerId = new JTextField();
+		txtField_OrderCustomerId.setBounds(743, 32, 130, 26);
+		frame.getContentPane().add(txtField_OrderCustomerId);
+		txtField_OrderCustomerId.setColumns(10);
+		
+		JLabel lblCustomerNumber = new JLabel("Kundnummer:");
+		lblCustomerNumber.setBounds(633, 38, 89, 14);
+		frame.getContentPane().add(lblCustomerNumber);
 	}
-	
-	// The textArea where the output comes out 
 }

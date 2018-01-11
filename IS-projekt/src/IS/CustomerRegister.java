@@ -98,8 +98,14 @@ public class CustomerRegister {
 
 	// method to remove an orderline from the orderline list with the id number//
 
-	public void addCustomer(Customer customerList) {
-		this.customerList.add(customerList);
+	public Boolean addCustomer(Customer customer) {
+		if(!customerList.contains(customer)) {
+			this.customerList.add(customer);
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public void addOrderLine(OrderLine orderLineList) {

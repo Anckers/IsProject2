@@ -1,31 +1,69 @@
 package IS;
 
 public class Controller {
+	
+	//remove this code?
+	
+	/*
 	ProductRegister productRegister = new ProductRegister();
 	CustomerRegister customerRegister = new CustomerRegister();
-
-	public void addCustomer(Customer temp) {
-		customerRegister.addCustomer(temp);
+	*/
+	
+	private ProductRegister productRegister;
+	private CustomerRegister customerRegister;
+	
+	public Controller (CustomerRegister customerRegister, ProductRegister productRegister) {
+		this.customerRegister = customerRegister;
+		this.productRegister = productRegister;
+	}
+	
+	
+	public Boolean addCustomer(Customer temp) {
+		Boolean  success = customerRegister.addCustomer(temp);
+		return success;
+		
 	}
 
-	public void addOrder(Order temp) {
-		customerRegister.addOrder(temp);
+	public Integer addOrder(String orderId, String orderDate, String customerId) {
+		Customer customer = customerRegister.findCustomer(customerId);
+		if(customer!=null) {
+			Order order = new Order (orderId, orderDate, customer);
+			if(customerRegister.findOrder(orderId) != null) {
+			customerRegister.addOrder(order);
+			return 1;
+			}
+			else {
+				return 0;
+			}
+		}
+		else {
+			return -1;
+		}
 	}
 
-	public void addOrderLine(OrderLine temp) {
+	public OrderLine addOrderLine(OrderLine temp) {
 		customerRegister.addOrderLine(temp);
+		return temp;
 	}
 
-	public void addProduct(Product temp) {
+	public Product addProduct(Product temp) {
 		productRegister.addProduct(temp);
+		return temp;
 	}
 
 	public void addItem(Item temp) {
 		productRegister.addItem(temp);
+		
 	}
 
 	public Customer findCustomer(String customerId) {
-		return customerRegister.findCustomer(customerId);
+		Customer customer = customerRegister.findCustomer(customerId);
+		if(customer != null) {
+			return customer;
+		}
+		else {
+			return null;
+		}
 	}
 
 	public Product findProduct(String productName) {
@@ -37,7 +75,13 @@ public class Controller {
 	}
 
 	public Customer removeCustomer(String customerId) {
-		return customerRegister.removeCustomer(customerId);
+		Customer customer = customerRegister.removeCustomer(customerId);
+		if(customer != null) {
+			return customer;
+		}
+		else {
+			return null;
+		}
 	}
 
 	public Order removeOrder(String orderId) {
@@ -56,8 +100,14 @@ public class Controller {
 		return customerRegister.removeOrderLine(orderLineId);
 	}
 
-	public Customer editCutomer(String CutomerId, String name, String adress) {
-		return customerRegister.editCustomer(CutomerId, name, adress);
+	public Customer editCustomer(String customerId, String name, String adress) {
+		Customer customer = customerRegister.editCustomer(customerId, name, adress);
+		if(customer != null) {
+			return customer;
+		}
+		else {
+			return null;
+		}
 	}
 
 	public Product editProduct(String productName, String category, int price) {

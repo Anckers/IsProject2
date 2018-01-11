@@ -4,12 +4,12 @@ public class Order {
 
 	private String orderId;
 	private String orderDate;
-	private Customer customer; // connect customer class to order//
+	private Customer customer;
 
 	public Order(String orderId, String orderDate, Customer customer) {
 		this.orderId = orderId;
 		this.orderDate = orderDate;
-		this.customer = customer;
+		this.setCustomer(customer);
 
 		// constructor//
 
@@ -29,6 +29,14 @@ public class Order {
 
 	public void setOrderDate(String newOrderDate) {
 		orderDate = newOrderDate;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 }
