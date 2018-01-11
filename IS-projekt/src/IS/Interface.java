@@ -359,12 +359,31 @@ public class Interface {
 		JButton btnCreate_Order = new JButton("Skapa");
 		btnCreate_Order.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
 				String orderId = textField_OrderNumber.getText();
 				String orderDate = textField_OrderDate.getText();
-				String customerId = txtField_CustomerNumber.getText();
-				controller.addOrder(orderId, orderDate, customerId);
-				textArea_1.setText("Ordern är tillagd");
+				String customerId = txtField_OrderCustomerId.getText();
+				Integer returnValue = controller.addOrder(orderId, orderDate, customerId);
+				if(!txtField_OrderCustomerId.getText().isEmpty() && !textField_OrderNumber.getText().isEmpty() && !textField_OrderDate.getText().isEmpty()) {
+					if(returnValue == 1) {
+						textArea_1.setForeground(new Color(0, 128, 0));
+						textArea_1.setText("Order: " + orderId + " har skapats och tillhör kund: " + customerId);
+						textField_OrderNumber.setText("");
+						textField_OrderDate.setText("");
+						txtField_OrderCustomerId.setText("");
+					}
+					else if(returnValue == 0) {
+						textArea_1.setForeground(new Color(255, 0, 0));
+						textArea_1.setText("finns ingen order på kund: " + customerId + " med ordernummer: " + orderId);
+					}
+					else if(returnValue == -1) {
+						textArea_1.setForeground(new Color(255, 0, 0));
+						textArea_1.setText("Finns ingen kund med kundnummer: " + customerId);
+					}
+				}
+				else {
+					textArea_1.setForeground(new Color(255, 0, 0));
+					textArea_1.setText("Inga fält kan vara tomma");
+				}
 			}
 
 		});
@@ -375,11 +394,24 @@ public class Interface {
 		btnSearch_Order.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String orderId = textField_OrderNumber.getText();
-
 				Order temp = controller.findOrder(orderId);
+				if(!textField_OrderNumber.getText().isEmpty()) {
+					if(temp != null) {
+						Customer customer = temp.getCustomer();
+						textArea_1.setForeground(new Color(0, 128, 0));
+						textArea_1.setText("Order: " + orderId + "\n Datum: " + temp.getOrderDate() + "\n Tillhör kund: " + customer.getCustomerId() + ", " + customer.getName());
+						textField_OrderNumber.setText("");
+					}
+					else {
+						textArea_1.setForeground(new Color(255, 0, 0));
+						textArea_1.setText("Finns ingen order med ordernummer: " + orderId);
+					}
+				}
+				else {
+					textArea_1.setForeground(new Color(255, 0, 0));
+					textArea_1.setText("Ordernummer krävs för att hitta order");
 
-				textArea_1.setText("Order info: " + temp.getOrderDate());
-
+				}
 			}
 		});
 		btnSearch_Order.setBounds(633, 166, 117, 29);
@@ -389,11 +421,23 @@ public class Interface {
 		btnDelete_Order.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String orderId = textField_OrderNumber.getText();
+				Order order = controller.removeOrder(orderId);
+				if(!textField_OrderNumber.getText().isEmpty()) {
+					if(order != null) {
+						textArea_1.setForeground(new Color(0, 128, 0));
+						textArea_1.setText("Order: " + orderId + " är borttagen");
+						textField_OrderNumber.setText("");
+					}
+					else {
+						textArea_1.setForeground(new Color(255, 0, 0));
+						textArea_1.setText("Finns ingen order med ordernummer: " + orderId);
 
-				controller.removeOrder(orderId);
-
-				textArea_1.setText("Ordern är borttagen");
-
+					}
+				}
+				else {
+					textArea_1.setForeground(new Color(255, 0, 0));
+					textArea_1.setText("Ordernummer krävs för att ta bort order");
+				}
 			}
 		});
 		btnDelete_Order.setBounds(756, 126, 117, 29);
@@ -434,7 +478,7 @@ public class Interface {
 				Integer antal = new Integer(textField_OrderLineAmount.getText());
 				String orderId = textField_OrderNumber.getText();
 				String productName = textField_ProductName.getText();
-
+				//fix!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 				Order temp1 = controller.findOrder(orderId);
 				Product temp2 = controller.findProduct(productName);
 
@@ -454,7 +498,7 @@ public class Interface {
 			public void actionPerformed(ActionEvent e) {
 				String idNummer = textField_Orderline.getText();
 				controller.removeOrderLine(idNummer);
-
+				//fix!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 				textArea_1.setText("Orderraden är borttagen");
 			}
 		});
@@ -486,7 +530,7 @@ public class Interface {
 			public void actionPerformed(ActionEvent e) {
 				String serialNumber = textField_ItemSerialNumber.getText();
 				String productId = textField_ProductName.getText();
-
+				//fix!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 				Product temp3 = controller.findProduct(productId);
 
 				Item E = new Item(serialNumber, temp3);
@@ -504,7 +548,7 @@ public class Interface {
 		btnDelete_Item.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String serialNumber = textField_ItemSerialNumber.getText();
-
+				//fix!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 				controller.removeItem(serialNumber);
 
 				textArea_1.setText("Exemplet är borttaget");

@@ -28,7 +28,7 @@ public class Controller {
 		Customer customer = customerRegister.findCustomer(customerId);
 		if(customer!=null) {
 			Order order = new Order (orderId, orderDate, customer);
-			if(customerRegister.findOrder(orderId) != null) {
+			if(customerRegister.findOrder(orderId) == null) {
 			customerRegister.addOrder(order);
 			return 1;
 			}
@@ -71,7 +71,23 @@ public class Controller {
 	}
 
 	public Order findOrder(String orderId) {
-		return customerRegister.findOrder(orderId);
+		Order order = customerRegister.findOrder(orderId);
+		if(order != null) {
+			return order;
+		}
+		else {
+			return null;
+		}
+	}
+	
+	public Customer getOrderOwner(String orderId) {
+		Order order = customerRegister.findOrder(orderId);
+		if(order != null) {
+			return order.getCustomer();
+		}
+		else {
+			return null;
+		}
 	}
 
 	public Customer removeCustomer(String customerId) {

@@ -4,7 +4,6 @@ public class Customer {
 	private String customerId;
 	private String name;
 	private String address;
-	private Order order;
 
 
 
@@ -39,13 +38,5 @@ public class Customer {
 
 	public void setAddress(String Address) {
 		address = Address;
-	}
-	
-	public Order getOrder() {
-		return order;
-	}
-
-	public void setOrder(Order order) {
-		this.order = order;
 	}
 }
