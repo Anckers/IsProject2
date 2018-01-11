@@ -211,7 +211,7 @@ public class Interface {
 				}
 				else {
 					textArea_1.setForeground(new Color(255, 0, 0));
-					textArea_1.setText("inga fält under Kund får vara tom");
+					textArea_1.setText("inga fält under Kund får vara tomma");
 				}
 			}
 		});
@@ -266,17 +266,28 @@ public class Interface {
 		JButton btnCreateProduct = new JButton("Skapa");
 		btnCreateProduct.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				String Namn = textField_ProductName.getText();
-				String Kategori = textField_ProductCategory.getText();
-				Integer pris = new Integer(txtField_ProductPrice.getText());
-				//fix!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-				Product B = new Product(Namn, Kategori, pris);
-
-				controller.addProduct(B);
-
-				textArea_1.setText("Produkten är tillagd");
-
+				String name = textField_ProductName.getText();
+				String category = textField_ProductCategory.getText();
+				Integer price = new Integer(txtField_ProductPrice.getText());				
+				Product B = new Product(name, category, price);
+				Boolean success = controller.addProduct(B);
+				if(!textField_ProductName.getText().isEmpty() && !textField_ProductCategory.getText().isEmpty() && !txtField_ProductPrice.getText().isEmpty()) {
+					if(success) {
+						textArea_1.setForeground(new Color(0, 128, 0));
+						textArea_1.setText(name + " är tillagd i systemet");
+						textField_ProductName.setText("");
+						textField_ProductCategory.setText("");
+						txtField_ProductPrice.setText("");
+					}
+					else {
+						textArea_1.setForeground(new Color(255, 0, 0));
+						textArea_1.setText("Produkt: " + name + " finns redan i systemet");
+					}
+				}
+				else {
+					textArea_1.setForeground(new Color(255, 0, 0));
+					textArea_1.setText("inga fält under Produkt får vara tomma");
+				}
 			}
 		});
 		btnCreateProduct.setBounds(316, 125, 117, 29);
@@ -285,12 +296,23 @@ public class Interface {
 		JButton btnSearchProduct = new JButton("S\u00F6k");
 		btnSearchProduct.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String productNamn = textField_ProductName.getText();
-				//fix!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-				Product temp = controller.findProduct(productNamn);
-
-				textArea_1.setText("Produktens info: " + temp.getCategory() + " " + temp.getPrice());
-
+				String productName = textField_ProductName.getText();			
+				Product temp = controller.findProduct(productName);
+				if(!textField_ProductName.getText().isEmpty()) {
+					if(temp != null) {
+						textField_ProductName.setText("");
+						textArea_1.setForeground(new Color(0, 0, 0));
+						textArea_1.setText("Produkt info \n ------------------------------------------ \n Namn: " + temp.getProductName() + "\n Kategori: " + temp.getCategory() + "\n Pris: " + temp.getPrice());
+					}
+					else {
+						textArea_1.setForeground(new Color(255, 0, 0));
+						textArea_1.setText("Finns ingen produkt med namn: " + productName);
+					}
+				}
+				else {
+					textArea_1.setForeground(new Color(255, 0, 0));
+					textArea_1.setText("Produktnamn krävs");
+				}
 			}
 		});
 		btnSearchProduct.setBounds(316, 166, 117, 29);
@@ -299,12 +321,24 @@ public class Interface {
 		JButton btnDeleteProduct = new JButton("Ta bort");
 		btnDeleteProduct.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String productNamn = textField_ProductName.getText();
-				//fix!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-				controller.removeProduct(productNamn);
-
-				textArea_1.setText("Produkten är borttagen");
-
+				String productName = textField_ProductName.getText();
+				Product temp = controller.findProduct(productName);
+				controller.removeProduct(productName);
+				if(!textField_ProductName.getText().isEmpty()) {
+					if(temp != null) {
+						textField_ProductName.setText("");
+						textArea_1.setForeground(new Color(0, 128, 0));
+						textArea_1.setText(temp.getProductName() + " har blivit borttagen");
+					}
+					else {
+						textArea_1.setForeground(new Color(255, 0, 0));
+						textArea_1.setText("Finns ingen produkt med namn: " + productName);
+					}
+				}
+				else {
+					textArea_1.setForeground(new Color(255, 0, 0));
+					textArea_1.setText("Produktnamn krävs");
+				}
 			}
 		});
 		btnDeleteProduct.setBounds(440, 125, 117, 29);
@@ -313,13 +347,28 @@ public class Interface {
 		JButton btnChangeProduct = new JButton("Ändra ");
 		btnChangeProduct.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String Namn = textField_ProductName.getText();
-				String Kategori = textField_ProductCategory.getText();
-				Integer pris = new Integer(txtField_ProductPrice.getText());
-
-				controller.editProduct(Namn, Kategori, pris);
-				//fix!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-				textArea_1.setText("Produkten är ändrad");
+				String name = textField_ProductName.getText();
+				String category = textField_ProductCategory.getText();
+				Integer price = new Integer(txtField_ProductPrice.getText());
+				Product temp = controller.findProduct(name);
+				if(!textField_ProductName.getText().isEmpty() && !textField_ProductCategory.getText().isEmpty() && !txtField_ProductPrice.getText().isEmpty()) {
+					if(temp != null) {
+						controller.editProduct(name, category, price);
+						textArea_1.setForeground(new Color(0, 128, 0));
+						textArea_1.setText("Produkten: " + name + " Har blivit ändrad");
+						textField_ProductName.setText("");
+						textField_ProductCategory.setText("");
+						txtField_ProductPrice.setText("");
+					}
+					else {
+						textArea_1.setForeground(new Color(255, 0, 0));
+						textArea_1.setText("Finns ingen produkt med namn " + name);
+					}
+				}
+				else {
+					textArea_1.setForeground(new Color(255, 0, 0));
+					textArea_1.setText("inga fält under Produkt får vara tomma");
+				}
 			}
 		});
 		btnChangeProduct.setBounds(440, 165, 117, 29);
@@ -479,15 +528,15 @@ public class Interface {
 		JButton btnCreate_OrderLine = new JButton("Skapa");
 		btnCreate_OrderLine.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String idNummer = textField_Orderline.getText();
-				Integer antal = new Integer(textField_OrderLineAmount.getText());
+				String idNumber = textField_Orderline.getText();
+				Integer amount = new Integer(textField_OrderLineAmount.getText());
 				String orderId = textField_OrderNumber.getText();
 				String productName = textField_ProductName.getText();
 				//fix!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 				Order temp1 = controller.findOrder(orderId);
 				Product temp2 = controller.findProduct(productName);
 
-				OrderLine D = new OrderLine(idNummer, antal, temp1, temp2);
+				OrderLine D = new OrderLine(idNumber, amount, temp1, temp2);
 
 				controller.addOrderLine(D);
 
@@ -501,8 +550,8 @@ public class Interface {
 		JButton btnDelete_OrderLine = new JButton("Ta bort");
 		btnDelete_OrderLine.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String idNummer = textField_Orderline.getText();
-				controller.removeOrderLine(idNummer);
+				String idNumber = textField_Orderline.getText();
+				controller.removeOrderLine(idNumber);
 				//fix!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 				textArea_1.setText("Orderraden är borttagen");
 			}

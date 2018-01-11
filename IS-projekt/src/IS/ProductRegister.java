@@ -68,8 +68,14 @@ public class ProductRegister {
 
 	// method to remove an Item with serial number //
 
-	public void addProduct(Product productList) {
-		this.productList.add(productList);
+	public Boolean addProduct(Product product) {
+		if(!productList.contains(product)) {
+			this.productList.add(product);
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public void addItem(Item itemList) {

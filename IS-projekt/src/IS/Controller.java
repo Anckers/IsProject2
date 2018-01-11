@@ -4,10 +4,9 @@ public class Controller {
 	
 	//remove this code?
 	
-	/*
-	ProductRegister productRegister = new ProductRegister();
-	CustomerRegister customerRegister = new CustomerRegister();
-	*/
+//	ProductRegister productRegister = new ProductRegister();
+//	CustomerRegister customerRegister = new CustomerRegister();
+
 	
 	private ProductRegister productRegister;
 	private CustomerRegister customerRegister;
@@ -46,9 +45,9 @@ public class Controller {
 		return temp;
 	}
 
-	public Product addProduct(Product temp) {
-		productRegister.addProduct(temp);
-		return temp;
+	public Boolean addProduct(Product temp) {
+		Boolean success = productRegister.addProduct(temp);
+		return success;
 	}
 
 	public void addItem(Item temp) {
@@ -105,7 +104,13 @@ public class Controller {
 	}
 
 	public Product removeProduct(String productName) {
-		return productRegister.removeProduct(productName);
+		Product product = productRegister.removeProduct(productName);
+		if(product != null) {
+			return product;
+		}
+		else {
+			return null;
+		}
 	}
 
 	public Item removeItem(String serialNumber) {
