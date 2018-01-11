@@ -11,6 +11,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.awt.Color;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 
 public class Interface {
 
@@ -31,6 +33,7 @@ public class Interface {
 	private JTextField textField_ItemSerialNumber;
 	private JTextArea textArea_1;
 	private JTextField txtField_OrderCustomerId;
+	private JTextField textField_OrderLineProductName;
 
 	
 	/**
@@ -68,6 +71,7 @@ public class Interface {
 		controller = new Controller (customerRegister, productRegister);
 		
 		frame = new JFrame();
+		frame.getContentPane().setEnabled(false);
 		frame.setBounds(100, 100, 929, 640);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -384,24 +388,24 @@ public class Interface {
 
 		JLabel lblOrder = new JLabel("Order");
 		lblOrder.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblOrder.setBounds(633, 0, 89, 26);
+		lblOrder.setBounds(623, 0, 89, 26);
 		frame.getContentPane().add(lblOrder);
 
 		JLabel lblOrderNumber = new JLabel("Ordernummer:");
-		lblOrderNumber.setBounds(633, 64, 95, 16);
+		lblOrderNumber.setBounds(623, 64, 95, 16);
 		frame.getContentPane().add(lblOrderNumber);
 
 		textField_OrderNumber = new JTextField();
-		textField_OrderNumber.setBounds(743, 59, 130, 26);
+		textField_OrderNumber.setBounds(706, 59, 197, 26);
 		frame.getContentPane().add(textField_OrderNumber);
 		textField_OrderNumber.setColumns(10);
 
 		JLabel lblOrderDate = new JLabel("Datum:");
-		lblOrderDate.setBounds(633, 92, 61, 16);
+		lblOrderDate.setBounds(623, 92, 61, 16);
 		frame.getContentPane().add(lblOrderDate);
 
 		textField_OrderDate = new JTextField();
-		textField_OrderDate.setBounds(743, 87, 130, 26);
+		textField_OrderDate.setBounds(706, 87, 197, 26);
 		frame.getContentPane().add(textField_OrderDate);
 		textField_OrderDate.setColumns(10);
 
@@ -441,7 +445,7 @@ public class Interface {
 			}
 
 		});
-		btnCreate_Order.setBounds(633, 126, 117, 29);
+		btnCreate_Order.setBounds(623, 126, 130, 29);
 		frame.getContentPane().add(btnCreate_Order);
 
 		JButton btnSearch_Order = new JButton("S\u00F6k");
@@ -468,7 +472,7 @@ public class Interface {
 				}
 			}
 		});
-		btnSearch_Order.setBounds(633, 166, 117, 29);
+		btnSearch_Order.setBounds(623, 166, 130, 29);
 		frame.getContentPane().add(btnSearch_Order);
 
 		JButton btnDelete_Order = new JButton("Ta bort");
@@ -494,7 +498,7 @@ public class Interface {
 				}
 			}
 		});
-		btnDelete_Order.setBounds(756, 126, 117, 29);
+		btnDelete_Order.setBounds(773, 126, 130, 29);
 		frame.getContentPane().add(btnDelete_Order);
 		
 		
@@ -504,24 +508,24 @@ public class Interface {
 
 		JLabel lblOrderLine = new JLabel(" Orderrad");
 		lblOrderLine.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblOrderLine.setBounds(3, 231, 139, 26);
+		lblOrderLine.setBounds(623, 231, 139, 26);
 		frame.getContentPane().add(lblOrderLine);
 
 		JLabel lblOrderline = new JLabel(" Orderradsnummer:");
-		lblOrderline.setBounds(3, 268, 148, 16);
+		lblOrderline.setBounds(623, 268, 148, 16);
 		frame.getContentPane().add(lblOrderline);
 
 		textField_Orderline = new JTextField();
-		textField_Orderline.setBounds(153, 263, 130, 26);
+		textField_Orderline.setBounds(727, 263, 176, 26);
 		frame.getContentPane().add(textField_Orderline);
 		textField_Orderline.setColumns(10);
 
 		JLabel lblOrderLineAmount = new JLabel(" Antal:");
-		lblOrderLineAmount.setBounds(3, 295, 61, 16);
+		lblOrderLineAmount.setBounds(623, 295, 61, 16);
 		frame.getContentPane().add(lblOrderLineAmount);
 
 		textField_OrderLineAmount = new JTextField();
-		textField_OrderLineAmount.setBounds(153, 290, 130, 26);
+		textField_OrderLineAmount.setBounds(727, 290, 176, 26);
 		frame.getContentPane().add(textField_OrderLineAmount);
 		textField_OrderLineAmount.setColumns(10);
 
@@ -531,20 +535,18 @@ public class Interface {
 				String idNumber = textField_Orderline.getText();
 				Integer amount = new Integer(textField_OrderLineAmount.getText());
 				String orderId = textField_OrderNumber.getText();
-				String productName = textField_ProductName.getText();
-				//fix!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+				String productName = textField_OrderLineProductName.getText();
+
 				Order temp1 = controller.findOrder(orderId);
 				Product temp2 = controller.findProduct(productName);
-
 				OrderLine D = new OrderLine(idNumber, amount, temp1, temp2);
-
 				controller.addOrderLine(D);
-
 				textArea_1.setText("Orderraden är tillagd");
+				//fix!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 			}
 		});
-		btnCreate_OrderLine.setBounds(3, 332, 130, 29);
+		btnCreate_OrderLine.setBounds(623, 368, 130, 29);
 		frame.getContentPane().add(btnCreate_OrderLine);
 
 		JButton btnDelete_OrderLine = new JButton("Ta bort");
@@ -556,7 +558,7 @@ public class Interface {
 				textArea_1.setText("Orderraden är borttagen");
 			}
 		});
-		btnDelete_OrderLine.setBounds(153, 332, 130, 29);
+		btnDelete_OrderLine.setBounds(773, 368, 130, 29);
 		frame.getContentPane().add(btnDelete_OrderLine);
 		
 		
@@ -619,16 +621,36 @@ public class Interface {
 		
 		textArea_1 = new JTextArea();
 		textArea_1.setLineWrap(true);
-		textArea_1.setBounds(199, 399, 499, 162);
+		textArea_1.setBounds(10, 399, 499, 162);
 		frame.getContentPane().add(textArea_1);
 		
 		txtField_OrderCustomerId = new JTextField();
-		txtField_OrderCustomerId.setBounds(743, 32, 130, 26);
+		txtField_OrderCustomerId.setBounds(706, 32, 197, 26);
 		frame.getContentPane().add(txtField_OrderCustomerId);
 		txtField_OrderCustomerId.setColumns(10);
 		
 		JLabel lblCustomerNumber = new JLabel("Kundnummer:");
-		lblCustomerNumber.setBounds(633, 38, 89, 14);
+		lblCustomerNumber.setBounds(623, 38, 89, 14);
 		frame.getContentPane().add(lblCustomerNumber);
+		
+		JSeparator separator = new JSeparator();
+		separator.setOrientation(SwingConstants.VERTICAL);
+		separator.setBackground(new Color(0, 0, 0));
+		separator.setBounds(586, 0, 2, 440);
+		frame.getContentPane().add(separator);
+		
+		JSeparator separator_1 = new JSeparator();
+		separator_1.setForeground(new Color(0, 0, 0));
+		separator_1.setBounds(586, 438, 327, 2);
+		frame.getContentPane().add(separator_1);
+		
+		textField_OrderLineProductName = new JTextField();
+		textField_OrderLineProductName.setBounds(727, 317, 176, 26);
+		frame.getContentPane().add(textField_OrderLineProductName);
+		textField_OrderLineProductName.setColumns(10);
+		
+		JLabel lblOrderLineProductName = new JLabel("Produktnamn:");
+		lblOrderLineProductName.setBounds(625, 322, 89, 14);
+		frame.getContentPane().add(lblOrderLineProductName);
 	}
 }
