@@ -362,8 +362,10 @@ public class Interface {
 				String orderId = textField_OrderNumber.getText();
 				String orderDate = textField_OrderDate.getText();
 				String customerId = txtField_OrderCustomerId.getText();
+				//Using Integer so that it is possible to discern if the order or the customer don't exist
 				Integer returnValue = controller.addOrder(orderId, orderDate, customerId);
 				if(!txtField_OrderCustomerId.getText().isEmpty() && !textField_OrderNumber.getText().isEmpty() && !textField_OrderDate.getText().isEmpty()) {
+					//Successful action 
 					if(returnValue == 1) {
 						textArea_1.setForeground(new Color(0, 128, 0));
 						textArea_1.setText("Order: " + orderId + " har skapats och tillhör kund: " + customerId);
@@ -371,15 +373,18 @@ public class Interface {
 						textField_OrderDate.setText("");
 						txtField_OrderCustomerId.setText("");
 					}
+					//order missing
 					else if(returnValue == 0) {
 						textArea_1.setForeground(new Color(255, 0, 0));
 						textArea_1.setText("finns ingen order på kund: " + customerId + " med ordernummer: " + orderId);
 					}
+					//customer missing
 					else if(returnValue == -1) {
 						textArea_1.setForeground(new Color(255, 0, 0));
 						textArea_1.setText("Finns ingen kund med kundnummer: " + customerId);
 					}
 				}
+				//text field entry missing
 				else {
 					textArea_1.setForeground(new Color(255, 0, 0));
 					textArea_1.setText("Inga fält kan vara tomma");
