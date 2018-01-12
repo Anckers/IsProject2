@@ -277,20 +277,26 @@ public class Interface {
 				String category = textField_ProductCategory.getText();
 				String priceTemp = textField_ProductPrice.getText();
 				if(!textField_ProductName.getText().isEmpty() && !textField_ProductCategory.getText().isEmpty() && !textField_ProductPrice.getText().isEmpty()) {
-					//changes the text from "String priceTemp = textField_ProductPrice.getText();" to Integer format. had to be done inside the line above to not cause an error
-					int price = Integer.parseInt(priceTemp);
-					Product B = new Product(name, category, price);
-					Boolean success = controller.addProduct(B);
-					if(success) {
-						textArea_1.setForeground(new Color(0, 128, 0));
-						textArea_1.setText(name + " är tillagd i systemet");
-						textField_ProductName.setText("");
-						textField_ProductCategory.setText("");
-						textField_ProductPrice.setText("");
+					if(priceTemp.matches("[0-9]+")) {
+						//changes the text from "String priceTemp = textField_ProductPrice.getText();" to Integer format. had to be done inside the line 279 to not cause an error
+						int price = Integer.parseInt(priceTemp);
+						Product B = new Product(name, category, price);
+						Boolean success = controller.addProduct(B);
+						if(success) {
+							textArea_1.setForeground(new Color(0, 128, 0));
+							textArea_1.setText(name + " är tillagd i systemet");
+							textField_ProductName.setText("");
+							textField_ProductCategory.setText("");
+							textField_ProductPrice.setText("");
+						}
+						else {
+							textArea_1.setForeground(new Color(255, 0, 0));
+							textArea_1.setText("Produkt: " + name + " finns redan i systemet");
+						}
 					}
 					else {
 						textArea_1.setForeground(new Color(255, 0, 0));
-						textArea_1.setText("Produkt: " + name + " finns redan i systemet");
+						textArea_1.setText("Pris får endast anges i siffror");
 					}
 				}
 				else {
@@ -364,6 +370,7 @@ public class Interface {
 				String priceTemp = textField_ProductPrice.getText();
 				Product temp = controller.findProduct(name);
 				if(!textField_ProductName.getText().isEmpty() && !textField_ProductCategory.getText().isEmpty() && !textField_ProductPrice.getText().isEmpty()) {
+					if(priceTemp.matches("[0-9]+")) {
 					int price = Integer.parseInt(priceTemp);
 					if(temp != null) {
 						controller.editProduct(name, category, price);
@@ -376,6 +383,11 @@ public class Interface {
 					else {
 						textArea_1.setForeground(new Color(255, 0, 0));
 						textArea_1.setText("Finns ingen produkt med namn " + name);
+						}
+					}
+					else {
+						textArea_1.setForeground(new Color(255, 0, 0));
+						textArea_1.setText("Pris får endast anges i siffror");
 					}
 				}
 				else {
@@ -551,27 +563,33 @@ public class Interface {
 				String productName = textField_OrderLineProductName.getText();
 				if(!textField_OrderNumber.getText().isEmpty()) {
 					if(!textField_OrderLineAmount.getText().isEmpty() && !textField_OrderlineId.getText().isEmpty() && !textField_OrderLineProductName.getText().isEmpty()) {
-						Order temp1 = controller.findOrder(orderId);
-						if(temp1 != null) {
-							Product temp2 = controller.findProduct(productName);
-							if(temp2 != null) {
-								int amount = Integer.parseInt(amountTemp);
-								OrderLine D = new OrderLine(idNumber, amount, temp1, temp2);
-								controller.addOrderLine(D);
-								textArea_1.setForeground(new Color(0, 0, 0));
-								textArea_1.setText("följande är information är nu tillagd\n" + "Order: " + orderId + "\n" + "Orderrad: " + idNumber + "\n" + "Produkt: " + productName + "\n" + "Antal: " + amountTemp);
-								textField_OrderlineId.setText("");
-								textField_OrderLineAmount.setText("");
-								textField_OrderLineProductName.setText("");
+						if(amountTemp.matches("[0-9]+")) {
+							Order temp1 = controller.findOrder(orderId);
+							if(temp1 != null) {
+								Product temp2 = controller.findProduct(productName);
+								if(temp2 != null) {
+									int amount = Integer.parseInt(amountTemp);
+									OrderLine D = new OrderLine(idNumber, amount, temp1, temp2);
+									controller.addOrderLine(D);
+									textArea_1.setForeground(new Color(0, 0, 0));
+									textArea_1.setText("följande är information är nu tillagd\n" + "Order: " + orderId + "\n" + "Orderrad: " + idNumber + "\n" + "Produkt: " + productName + "\n" + "Antal: " + amountTemp);
+									textField_OrderlineId.setText("");
+									textField_OrderLineAmount.setText("");
+									textField_OrderLineProductName.setText("");
+								}
+								else {
+									textArea_1.setForeground(new Color(255, 0, 0));
+									textArea_1.setText("Finns ingen Produkt med namn: " + orderId);
+								}
 							}
 							else {
 								textArea_1.setForeground(new Color(255, 0, 0));
-								textArea_1.setText("Finns ingen Produkt med namn: " + orderId);
+								textArea_1.setText("Finns ingen Order med ordernummer: " + orderId);
 							}
 						}
 						else {
 							textArea_1.setForeground(new Color(255, 0, 0));
-							textArea_1.setText("Finns ingen Order med ordernummer: " + orderId);
+							textArea_1.setText("Antal får endast anges i siffror");
 						}
 					}
 					else {
@@ -770,16 +788,22 @@ public class Interface {
 				String serialNumer = textField_OrderlineId.getText();
 				String amountTemp = textField_OrderLineAmount.getText();
 				if(!textField_OrderlineId.getText().isEmpty() && !textField_OrderLineAmount.getText().isEmpty()) {
-					OrderLine oL = controller.findOrderLine(serialNumer);
-					int quantity = Integer.parseInt(amountTemp);
-					if(oL != null) {
-						controller.editOrderLineAmount(serialNumer, quantity);
-						textArea_1.setForeground(new Color(255, 0, 0));
-						textArea_1.setText("Orderrad: " + serialNumer + "\n" + "Produkt: " + oL.getPruduct() + "\n" + "Antal: " + oL.getQuantity());
+					if(amountTemp.matches("[0-9]+")) {
+						OrderLine oL = controller.findOrderLine(serialNumer);
+						int quantity = Integer.parseInt(amountTemp);
+						if(oL != null) {
+							controller.editOrderLineAmount(serialNumer, quantity);
+							textArea_1.setForeground(new Color(255, 0, 0));
+							textArea_1.setText("Orderrad: " + serialNumer + "\n" + "Produkt: " + oL.getPruduct() + "\n" + "Antal: " + oL.getQuantity());
+						}
+						else {
+							textArea_1.setForeground(new Color(255, 0, 0));
+							textArea_1.setText("finns ingen orderrad med nummer: " + serialNumer);
+						}
 					}
 					else {
 						textArea_1.setForeground(new Color(255, 0, 0));
-						textArea_1.setText("finns ingen orderrad med nummer: " + serialNumer);
+						textArea_1.setText("Antal får endast anges i siffror");
 					}
 				}
 				else {
