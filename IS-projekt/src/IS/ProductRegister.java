@@ -81,6 +81,7 @@ public class ProductRegister {
 	public void addItem(Item itemList) {
 		this.itemList.add(itemList);
 	}
+	
 
 	// methods to add a Product or Item to their lists //
 

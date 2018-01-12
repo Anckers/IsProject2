@@ -79,7 +79,7 @@ public class Interface {
 		frame.getContentPane().add(lblCustomerNbr);
 
 		textField_CustomerNumber = new JTextField();
-		textField_CustomerNumber.setBounds(119, 32, 130, 26);
+		textField_CustomerNumber.setBounds(119, 33, 130, 26);
 		frame.getContentPane().add(textField_CustomerNumber);
 		textField_CustomerNumber.setColumns(10);
 
@@ -243,7 +243,7 @@ public class Interface {
 		frame.getContentPane().add(lblProductName);
 
 		textField_ProductName = new JTextField();
-		textField_ProductName.setBounds(427, 59, 130, 26);
+		textField_ProductName.setBounds(427, 33, 130, 26);
 		frame.getContentPane().add(textField_ProductName);
 		textField_ProductName.setColumns(10);
 
@@ -252,7 +252,7 @@ public class Interface {
 		frame.getContentPane().add(lblProductCategory);
 
 		textField_ProductCategory = new JTextField();
-		textField_ProductCategory.setBounds(427, 31, 130, 26);
+		textField_ProductCategory.setBounds(427, 60, 130, 26);
 		frame.getContentPane().add(textField_ProductCategory);
 		textField_ProductCategory.setColumns(10);
 
@@ -261,7 +261,7 @@ public class Interface {
 		frame.getContentPane().add(lblProductPrice);
 
 		textField_ProductPrice = new JTextField();
-		textField_ProductPrice.setBounds(427, 86, 130, 26);
+		textField_ProductPrice.setBounds(427, 87, 130, 26);
 		frame.getContentPane().add(textField_ProductPrice);
 		textField_ProductPrice.setColumns(10);
 
@@ -272,6 +272,7 @@ public class Interface {
 				String category = textField_ProductCategory.getText();
 				String priceTemp = textField_ProductPrice.getText();
 				if(!textField_ProductName.getText().isEmpty() && !textField_ProductCategory.getText().isEmpty() && !textField_ProductPrice.getText().isEmpty()) {
+					//changes the text from "String priceTemp = textField_ProductPrice.getText();" to Integer format. had to be done inside the line above to not cause an error
 					int price = Integer.parseInt(priceTemp);
 					Product B = new Product(name, category, price);
 					Boolean success = controller.addProduct(B);
@@ -396,7 +397,7 @@ public class Interface {
 		frame.getContentPane().add(lblOrderNumber);
 
 		textField_OrderNumber = new JTextField();
-		textField_OrderNumber.setBounds(733, 59, 170, 26);
+		textField_OrderNumber.setBounds(733, 60, 170, 26);
 		frame.getContentPane().add(textField_OrderNumber);
 		textField_OrderNumber.setColumns(10);
 
@@ -611,7 +612,7 @@ public class Interface {
 		frame.getContentPane().add(lbl_ItemSerialNumber);
 
 		textField_ItemSerialNumber = new JTextField();
-		textField_ItemSerialNumber.setBounds(422, 263, 130, 26);
+		textField_ItemSerialNumber.setBounds(427, 263, 130, 26);
 		frame.getContentPane().add(textField_ItemSerialNumber);
 		textField_ItemSerialNumber.setColumns(10);
 
@@ -621,13 +622,22 @@ public class Interface {
 				String serialNumber = textField_ItemSerialNumber.getText();
 				String productId = textField_ProductName.getText();
 				Product temp3 = controller.findProduct(productId);
-
 				Item E = new Item(serialNumber, temp3);
-
-				controller.addItem(E);
-
-				textArea_1.setText("Exemplaret är tillagt");
-
+				if(!textField_ItemSerialNumber.getText().isEmpty() && !textField_ProductName.getText().isEmpty()) {
+					if(temp3 != null) {
+						controller.addItem(E);
+						textArea_1.setForeground(new Color(0, 0, 0));
+						textArea_1.setText(productId + "\n" + "Exemplar: " + serialNumber + "\n" + "Är tillagt");
+					}
+					else {
+						textArea_1.setForeground(new Color(255, 0, 0));
+						textArea_1.setText("finns ingen produkt med namn: " + productId);
+					}
+				}
+				else {
+					textArea_1.setForeground(new Color(255, 0, 0));
+					textArea_1.setText("Produktnam och Serienummer krävs");
+				}
 			}
 		});
 		btnCreate_Item.setBounds(316, 335, 117, 29);
@@ -637,10 +647,22 @@ public class Interface {
 		btnDelete_Item.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String serialNumber = textField_ItemSerialNumber.getText();
-				//fix!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-				controller.removeItem(serialNumber);
-
-				textArea_1.setText("Exemplet är borttaget");
+				if(!textField_ItemSerialNumber.getText().isEmpty()) {
+					Item item = controller.findItem(serialNumber);
+					if(item != null) {
+						textArea_1.setForeground(new Color(0, 128, 0));
+						textArea_1.setText("Exemplar med Serienummer: " + serialNumber + "är borttaget");
+						controller.removeItem(serialNumber);
+					}
+					else {
+						textArea_1.setForeground(new Color(255, 0, 0));
+						textArea_1.setText("Finns inget exemplar med Serienummer: " + serialNumber);
+					}
+				}
+				else {
+					textArea_1.setForeground(new Color(255, 0, 0));
+					textArea_1.setText("Serienummer krävs");
+				}
 			}
 		});
 		btnDelete_Item.setBounds(435, 335, 117, 29);
@@ -658,7 +680,7 @@ public class Interface {
 		frame.getContentPane().add(textArea_1);
 		
 		textField_OrderCustomerId = new JTextField();
-		textField_OrderCustomerId.setBounds(733, 32, 170, 26);
+		textField_OrderCustomerId.setBounds(733, 33, 170, 26);
 		frame.getContentPane().add(textField_OrderCustomerId);
 		textField_OrderCustomerId.setColumns(10);
 		
@@ -685,5 +707,37 @@ public class Interface {
 		JLabel lblOrderLineProductName = new JLabel("Produktnamn:");
 		lblOrderLineProductName.setBounds(625, 322, 89, 14);
 		frame.getContentPane().add(lblOrderLineProductName);
+		
+		JButton btnClearTextArea = new JButton("T\u00F6m textrutan");
+		btnClearTextArea.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				textArea_1.setText("");	
+			}
+		});
+		btnClearTextArea.setBounds(10, 349, 132, 37);
+		frame.getContentPane().add(btnClearTextArea);
+		
+		JButton btnClearAllTextFeildsAndTextArea = new JButton("T\u00F6m alla f\u00E4lt");
+		btnClearAllTextFeildsAndTextArea.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textArea_1.setText("");
+				textFeild_Name.setText("");
+				textField_Address.setText("");
+				textField_CustomerNumber.setText("");
+				textField_ItemSerialNumber.setText("");
+				textField_OrderCustomerId.setText("");
+				textField_OrderDate.setText("");
+				textField_Orderline.setText("");
+				textField_OrderLineAmount.setText("");
+				textField_OrderLineProductName.setText("");
+				textField_OrderNumber.setText("");
+				textField_ProductCategory.setText("");
+				textField_ProductName.setText("");
+				textField_ProductPrice.setText("");
+			}
+		});
+		btnClearAllTextFeildsAndTextArea.setBounds(10, 299, 132, 37);
+		frame.getContentPane().add(btnClearAllTextFeildsAndTextArea);
 	}
 }

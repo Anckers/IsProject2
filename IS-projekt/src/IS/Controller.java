@@ -54,6 +54,16 @@ public class Controller {
 		productRegister.addItem(temp);
 		
 	}
+	
+	public Item findItem(String serialNumber) {
+		Item item = productRegister.findItem(serialNumber);
+		if(item != null) {
+			return item;
+		}
+		else {
+			return null;
+		}
+	}
 
 	public Customer findCustomer(String customerId) {
 		Customer customer = customerRegister.findCustomer(customerId);
@@ -66,7 +76,13 @@ public class Controller {
 	}
 
 	public Product findProduct(String productName) {
-		return productRegister.findProduct(productName);
+		Product product = productRegister.findProduct(productName);
+		if(product != null) {
+			return product;
+		}
+		else {
+			return null;
+		}
 	}
 
 	public Order findOrder(String orderId) {
