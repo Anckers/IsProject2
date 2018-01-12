@@ -550,22 +550,28 @@ public class Interface {
 				String amountTemp = textField_OrderLineAmount.getText();
 				String productName = textField_OrderLineProductName.getText();
 				if(!textField_OrderNumber.getText().isEmpty()) {
-					if(!textField_OrderLineAmount.getText().isEmpty() && textField_OrderNumber.getText().isEmpty() && textField_OrderLineProductName.getText().isEmpty()) {
+					if(!textField_OrderLineAmount.getText().isEmpty() && !textField_OrderlineId.getText().isEmpty() && !textField_OrderLineProductName.getText().isEmpty()) {
 						Order temp1 = controller.findOrder(orderId);
 						if(temp1 != null) {
-							int amount = Integer.parseInt(amountTemp);
 							Product temp2 = controller.findProduct(productName);
-							OrderLine D = new OrderLine(idNumber, amount, temp1, temp2);
-							controller.addOrderLine(D);
-							textArea_1.setForeground(new Color(0, 0, 0));
-							textArea_1.setText("följande är information är nu tillagd\n" + "Order: " + temp1 + "\n" + "Orderrad: " + D + "\n" + "Produkt: " + temp2);
-							textField_OrderlineId.setText("");
-							textField_OrderLineAmount.setText("");
-							textField_OrderLineProductName.setText("");
+							if(temp2 != null) {
+								int amount = Integer.parseInt(amountTemp);
+								OrderLine D = new OrderLine(idNumber, amount, temp1, temp2);
+								controller.addOrderLine(D);
+								textArea_1.setForeground(new Color(0, 0, 0));
+								textArea_1.setText("följande är information är nu tillagd\n" + "Order: " + orderId + "\n" + "Orderrad: " + idNumber + "\n" + "Produkt: " + productName + "\n" + "Antal: " + amountTemp);
+								textField_OrderlineId.setText("");
+								textField_OrderLineAmount.setText("");
+								textField_OrderLineProductName.setText("");
+							}
+							else {
+								textArea_1.setForeground(new Color(255, 0, 0));
+								textArea_1.setText("Finns ingen Produkt med namn: " + orderId);
+							}
 						}
 						else {
 							textArea_1.setForeground(new Color(255, 0, 0));
-							textArea_1.setText("Finns ingen order med ordernummer: " + orderId);
+							textArea_1.setText("Finns ingen Order med ordernummer: " + orderId);
 						}
 					}
 					else {
