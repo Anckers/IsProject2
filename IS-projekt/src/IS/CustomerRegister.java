@@ -110,6 +110,8 @@ public class CustomerRegister {
 
 	public void addOrderLine(OrderLine orderLineList) {
 		this.orderLineList.add(orderLineList);
+		//////FIX!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		//needs to be connected to an order????
 	}
 
 	public void addOrder(Order orderList) {
