@@ -59,7 +59,7 @@ public class CustomerRegister {
 
 	public OrderLine findOrderLine(String idNumber) {
 		for (OrderLine temp : orderLineList) {
-			if (temp.getIdNummer().equals(idNumber)) {
+			if (temp.getIdNumber().equals(idNumber)) {
 				return temp;
 			}
 		}
@@ -110,8 +110,15 @@ public class CustomerRegister {
 
 	public void addOrderLine(OrderLine orderLineList) {
 		this.orderLineList.add(orderLineList);
-		//////FIX!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		//needs to be connected to an order????
+	}
+	
+	public OrderLine editOrderLineAmount(String idNumber, Integer quantity) {
+		OrderLine temp = this.findOrderLine(idNumber);
+		if (temp != null) {
+			temp.setQuantity(quantity);
+			return temp;
+		}
+		return null;
 	}
 
 	public void addOrder(Order orderList) {

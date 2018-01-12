@@ -1,13 +1,14 @@
 package IS;
 
 public class OrderLine {
-	private String idNummer;
 	private int quantity;
 	private Order order; // connected Order class to OrderLine//
 	private Product product; // connected Product class to OrderLine
+	private String idNumber;
 
-	public OrderLine(String IdNummer, int quantity, Order order, Product product) {
-		this.idNummer = idNummer;
+
+	public OrderLine(String idNumber, int quantity, Order order, Product product) {
+		this.idNumber = idNumber;
 		this.quantity = quantity;
 		this.order = order;
 		this.product = product;
@@ -15,12 +16,12 @@ public class OrderLine {
 		// constructor//
 	}
 
-	public String getIdNummer() {
-		return idNummer;
+	public String getIdNumber() {
+		return idNumber;
 	}
 
-	public void setIdNummer(String idNummer) {
-		idNummer = idNummer;
+	public void setIdNumber(String idNumber) {
+		this.idNumber = idNumber;
 	}
 
 	public int getQuantity() {
@@ -28,7 +29,7 @@ public class OrderLine {
 	}
 
 	public void setQuantity(int quantity) {
-		quantity = quantity;
+		this.quantity = quantity;
 	}
 
 	public Order getOrder() {

@@ -44,6 +44,26 @@ public class Controller {
 		customerRegister.addOrderLine(temp);
 		return temp;
 	}
+	
+	public OrderLine editOrderLineAmount(String idNumber, Integer quantity) {
+		OrderLine oL = customerRegister.editOrderLineAmount(idNumber, quantity);
+		if(oL != null) {
+			return oL;
+		}
+		else {
+			return null;
+		}
+	}
+	
+	public OrderLine findOrderLine(String idNumber) {
+		OrderLine oL = customerRegister.findOrderLine(idNumber);
+		if(oL != null) {
+			return oL;
+		}
+		else {
+			return null;
+		}
+	}
 
 	public Boolean addProduct(Product temp) {
 		Boolean success = productRegister.addProduct(temp);
@@ -150,5 +170,4 @@ public class Controller {
 	public Product editProduct(String productName, String category, int price) {
 		return productRegister.editProduct(productName, category, price);
 	}
-
 }

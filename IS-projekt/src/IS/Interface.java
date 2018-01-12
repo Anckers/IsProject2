@@ -28,7 +28,7 @@ public class Interface {
 	private JTextField textField_ProductPrice;
 	private JTextField textField_OrderNumber;
 	private JTextField textField_OrderDate;
-	private JTextField textField_Orderline;
+	private JTextField textField_OrderlineId;
 	private JTextField textField_OrderLineAmount;
 	private JTextField textField_ItemSerialNumber;
 	private JTextArea textArea_1;
@@ -516,10 +516,10 @@ public class Interface {
 		lblOrderline.setBounds(623, 268, 148, 16);
 		frame.getContentPane().add(lblOrderline);
 
-		textField_Orderline = new JTextField();
-		textField_Orderline.setBounds(746, 263, 157, 26);
-		frame.getContentPane().add(textField_Orderline);
-		textField_Orderline.setColumns(10);
+		textField_OrderlineId = new JTextField();
+		textField_OrderlineId.setBounds(746, 263, 157, 26);
+		frame.getContentPane().add(textField_OrderlineId);
+		textField_OrderlineId.setColumns(10);
 
 		JLabel lblOrderLineAmount = new JLabel(" Antal:");
 		lblOrderLineAmount.setBounds(623, 295, 61, 16);
@@ -534,7 +534,7 @@ public class Interface {
 		btnCreate_OrderLine.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String orderId = textField_OrderNumber.getText();
-				String idNumber = textField_Orderline.getText();
+				String idNumber = textField_OrderlineId.getText();
 				String amountTemp = textField_OrderLineAmount.getText();
 				String productName = textField_OrderLineProductName.getText();
 				if(!textField_OrderNumber.getText().isEmpty()) {
@@ -547,7 +547,7 @@ public class Interface {
 							controller.addOrderLine(D);
 							textArea_1.setForeground(new Color(0, 0, 0));
 							textArea_1.setText("följande är information är nu tillagd\n" + "Order: " + temp1 + "\n" + "Orderrad: " + D + "\n" + "Produkt: " + temp2);
-							textField_Orderline.setText("");
+							textField_OrderlineId.setText("");
 							textField_OrderLineAmount.setText("");
 							textField_OrderLineProductName.setText("");
 						}
@@ -574,13 +574,13 @@ public class Interface {
 		JButton btnDelete_OrderLine = new JButton("Ta bort");
 		btnDelete_OrderLine.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String idNumber = textField_Orderline.getText();
-				if(!textField_Orderline.getText().isEmpty()) {
+				String idNumber = textField_OrderlineId.getText();
+				if(!textField_OrderlineId.getText().isEmpty()) {
 					OrderLine oL = controller.removeOrderLine(idNumber);
 					if(oL != null) {
 						textArea_1.setForeground(new Color(0, 128, 0));
 						textArea_1.setText("Orderraden: " + idNumber + " är nu borttagen");
-						textField_Orderline.setText("");
+						textField_OrderlineId.setText("");
 					}
 					else {
 						textArea_1.setForeground(new Color(255, 0, 0));
@@ -691,12 +691,12 @@ public class Interface {
 		JSeparator separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);
 		separator.setBackground(new Color(0, 0, 0));
-		separator.setBounds(586, 0, 2, 440);
+		separator.setBounds(586, 0, 1, 465);
 		frame.getContentPane().add(separator);
 		
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setForeground(new Color(0, 0, 0));
-		separator_1.setBounds(586, 438, 327, 2);
+		separator_1.setBounds(586, 463, 327, 2);
 		frame.getContentPane().add(separator_1);
 		
 		textField_OrderLineProductName = new JTextField();
@@ -728,7 +728,7 @@ public class Interface {
 				textField_ItemSerialNumber.setText("");
 				textField_OrderCustomerId.setText("");
 				textField_OrderDate.setText("");
-				textField_Orderline.setText("");
+				textField_OrderlineId.setText("");
 				textField_OrderLineAmount.setText("");
 				textField_OrderLineProductName.setText("");
 				textField_OrderNumber.setText("");
@@ -739,5 +739,32 @@ public class Interface {
 		});
 		btnClearAllTextFeildsAndTextArea.setBounds(10, 299, 132, 37);
 		frame.getContentPane().add(btnClearAllTextFeildsAndTextArea);
+		
+		JButton btnOrderLineChangeAmount = new JButton("\u00C4ndra antal");
+		btnOrderLineChangeAmount.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String serialNumer = textField_OrderlineId.getText();
+				String amountTemp = textField_OrderLineAmount.getText();
+				if(!textField_OrderlineId.getText().isEmpty() && !textField_OrderLineAmount.getText().isEmpty()) {
+					OrderLine oL = controller.findOrderLine(serialNumer);
+					int quantity = Integer.parseInt(amountTemp);
+					if(oL != null) {
+						controller.editOrderLineAmount(serialNumer, quantity);
+						textArea_1.setForeground(new Color(255, 0, 0));
+						textArea_1.setText("Orderrad: " + serialNumer + "\n" + "Produkt: " + oL.getPruduct() + "\n" + "Antal: " + oL.getQuantity());
+					}
+					else {
+						textArea_1.setForeground(new Color(255, 0, 0));
+						textArea_1.setText("finns ingen orderrad med nummer: " + serialNumer);
+					}
+				}
+				else {
+					textArea_1.setForeground(new Color(255, 0, 0));
+					textArea_1.setText("Orderradsnummer och Antal krävs");
+				}
+			}
+		});
+		btnOrderLineChangeAmount.setBounds(623, 408, 130, 29);
+		frame.getContentPane().add(btnOrderLineChangeAmount);
 	}
 }
