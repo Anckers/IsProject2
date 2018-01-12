@@ -277,6 +277,7 @@ public class Interface {
 				String category = textField_ProductCategory.getText();
 				String priceTemp = textField_ProductPrice.getText();
 				if(!textField_ProductName.getText().isEmpty() && !textField_ProductCategory.getText().isEmpty() && !textField_ProductPrice.getText().isEmpty()) {
+					//checks if "textField_ProductPrice" only consists of numbers otherwise error message on line 300 apears
 					if(priceTemp.matches("[0-9]+")) {
 						//changes the text from "String priceTemp = textField_ProductPrice.getText();" to Integer format. had to be done inside the line 279 to not cause an error
 						int price = Integer.parseInt(priceTemp);
