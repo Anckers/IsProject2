@@ -102,6 +102,7 @@ public class Interface {
 		textField_Address.setColumns(10);
 
 		JButton btnCreateCustomer = new JButton("Skapa");
+		btnCreateCustomer.setFocusable(false);
 		btnCreateCustomer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String customerId = textField_CustomerNumber.getText();
@@ -140,6 +141,7 @@ public class Interface {
 		frame.getContentPane().add(btnCreateCustomer);
 
 		JButton btnSearchCustomer = new JButton("S\u00F6k");
+		btnSearchCustomer.setFocusable(false);
 		btnSearchCustomer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String customId = textField_CustomerNumber.getText();
@@ -165,6 +167,7 @@ public class Interface {
 		frame.getContentPane().add(btnSearchCustomer);
 
 		JButton btnDeleteCustomer = new JButton("Ta bort");
+		btnDeleteCustomer.setFocusable(false);
 		btnDeleteCustomer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String customId = textField_CustomerNumber.getText();
@@ -191,6 +194,7 @@ public class Interface {
 		frame.getContentPane().add(btnDeleteCustomer);
 
 		JButton btnChangeCustomer = new JButton("Ändra ");
+		btnChangeCustomer.setFocusable(false);
 		btnChangeCustomer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String customId = textField_CustomerNumber.getText();
@@ -266,6 +270,7 @@ public class Interface {
 		textField_ProductPrice.setColumns(10);
 
 		JButton btnCreateProduct = new JButton("Skapa");
+		btnCreateProduct.setFocusable(false);
 		btnCreateProduct.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String name = textField_ProductName.getText();
@@ -298,6 +303,7 @@ public class Interface {
 		frame.getContentPane().add(btnCreateProduct);
 
 		JButton btnSearchProduct = new JButton("S\u00F6k");
+		btnSearchProduct.setFocusable(false);
 		btnSearchProduct.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String productName = textField_ProductName.getText();			
@@ -323,6 +329,7 @@ public class Interface {
 		frame.getContentPane().add(btnSearchProduct);
 
 		JButton btnDeleteProduct = new JButton("Ta bort");
+		btnDeleteProduct.setFocusable(false);
 		btnDeleteProduct.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String productName = textField_ProductName.getText();
@@ -349,6 +356,7 @@ public class Interface {
 		frame.getContentPane().add(btnDeleteProduct);
 
 		JButton btnChangeProduct = new JButton("Ändra ");
+		btnChangeProduct.setFocusable(false);
 		btnChangeProduct.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String name = textField_ProductName.getText();
@@ -411,6 +419,7 @@ public class Interface {
 		textField_OrderDate.setColumns(10);
 
 		JButton btnCreate_Order = new JButton("Skapa");
+		btnCreate_Order.setFocusable(false);
 		btnCreate_Order.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String orderId = textField_OrderNumber.getText();
@@ -450,6 +459,7 @@ public class Interface {
 		frame.getContentPane().add(btnCreate_Order);
 
 		JButton btnSearch_Order = new JButton("S\u00F6k");
+		btnSearch_Order.setFocusable(false);
 		btnSearch_Order.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String orderId = textField_OrderNumber.getText();
@@ -477,6 +487,7 @@ public class Interface {
 		frame.getContentPane().add(btnSearch_Order);
 
 		JButton btnDelete_Order = new JButton("Ta bort");
+		btnDelete_Order.setFocusable(false);
 		btnDelete_Order.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String orderId = textField_OrderNumber.getText();
@@ -531,6 +542,7 @@ public class Interface {
 		textField_OrderLineAmount.setColumns(10);
 
 		JButton btnCreate_OrderLine = new JButton("Skapa");
+		btnCreate_OrderLine.setFocusable(false);
 		btnCreate_OrderLine.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String orderId = textField_OrderNumber.getText();
@@ -572,6 +584,7 @@ public class Interface {
 		frame.getContentPane().add(btnCreate_OrderLine);
 
 		JButton btnDelete_OrderLine = new JButton("Ta bort");
+		btnDelete_OrderLine.setFocusable(false);
 		btnDelete_OrderLine.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String idNumber = textField_OrderlineId.getText();
@@ -617,6 +630,7 @@ public class Interface {
 		textField_ItemSerialNumber.setColumns(10);
 
 		JButton btnCreate_Item = new JButton("Skapa");
+		btnCreate_Item.setFocusable(false);
 		btnCreate_Item.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String serialNumber = textField_ItemSerialNumber.getText();
@@ -644,6 +658,7 @@ public class Interface {
 		frame.getContentPane().add(btnCreate_Item);
 
 		JButton btnDelete_Item = new JButton("Ta bort");
+		btnDelete_Item.setFocusable(false);
 		btnDelete_Item.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String serialNumber = textField_ItemSerialNumber.getText();
@@ -709,6 +724,7 @@ public class Interface {
 		frame.getContentPane().add(lblOrderLineProductName);
 		
 		JButton btnClearTextArea = new JButton("T\u00F6m textrutan");
+		btnClearTextArea.setFocusable(false);
 		btnClearTextArea.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -719,6 +735,7 @@ public class Interface {
 		frame.getContentPane().add(btnClearTextArea);
 		
 		JButton btnClearAllTextFeildsAndTextArea = new JButton("T\u00F6m alla f\u00E4lt");
+		btnClearAllTextFeildsAndTextArea.setFocusable(false);
 		btnClearAllTextFeildsAndTextArea.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				textArea_1.setText("");
@@ -741,6 +758,7 @@ public class Interface {
 		frame.getContentPane().add(btnClearAllTextFeildsAndTextArea);
 		
 		JButton btnOrderLineChangeAmount = new JButton("\u00C4ndra antal");
+		btnOrderLineChangeAmount.setFocusable(false);
 		btnOrderLineChangeAmount.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String serialNumer = textField_OrderlineId.getText();
