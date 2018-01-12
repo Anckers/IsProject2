@@ -532,9 +532,9 @@ public class Interface {
 		JButton btnCreate_OrderLine = new JButton("Skapa");
 		btnCreate_OrderLine.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String orderId = textField_OrderNumber.getText();
 				String idNumber = textField_Orderline.getText();
 				String amountTemp = textField_OrderLineAmount.getText();
-				String orderId = textField_OrderNumber.getText();
 				String productName = textField_OrderLineProductName.getText();
 				if(!textField_OrderNumber.getText().isEmpty()) {
 					if(!textField_OrderLineAmount.getText().isEmpty() && textField_OrderNumber.getText().isEmpty() && textField_OrderLineProductName.getText().isEmpty()) {
@@ -546,6 +546,9 @@ public class Interface {
 							controller.addOrderLine(D);
 							textArea_1.setForeground(new Color(0, 0, 0));
 							textArea_1.setText("följande är information är nu tillagd\n" + "Order: " + temp1 + "\n" + "Orderrad: " + D + "\n" + "Produkt: " + temp2);
+							textField_Orderline.setText("");
+							textField_OrderLineAmount.setText("");
+							textField_OrderLineProductName.setText("");
 						}
 						else {
 							textArea_1.setForeground(new Color(255, 0, 0));
@@ -617,7 +620,6 @@ public class Interface {
 			public void actionPerformed(ActionEvent e) {
 				String serialNumber = textField_ItemSerialNumber.getText();
 				String productId = textField_ProductName.getText();
-				//fix!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 				Product temp3 = controller.findProduct(productId);
 
 				Item E = new Item(serialNumber, temp3);
