@@ -2,12 +2,6 @@ package IS;
 
 public class Controller {
 	
-	//remove this code?
-	
-//	ProductRegister productRegister = new ProductRegister();
-//	CustomerRegister customerRegister = new CustomerRegister();
-
-	
 	private ProductRegister productRegister;
 	private CustomerRegister customerRegister;
 	
